@@ -21,30 +21,6 @@ const FUNCCOMPONENTS = {
   'BusinessDashboard': {
     icon: require('./src/app/images/icon-businessDashboard@3x.png'),
     component: BusinessDashboard
-  },
-  'PurchasePath': {
-    icon: require('./src/app/images/icon-purchasePath@3x.png'),
-    component: PurchasePath
-  },
-  'StockMarketing': {
-    icon: require('./src/app/images/icon_stockMarketing@3x.png'),
-    component: StockMarketing
-  },
-  'SaleDiagnosis': {
-    icon: require('./src/app/images/icon-sallediagnosis@3x.png'),
-    component: null
-  },
-  'PriceTra': {
-    icon: require('./src/app/images/icon-price@3x.png'),
-    component: null
-  },
-  'UserRequirement': {
-    icon: require('./src/app/images/icon-UserRequirement@3x.png'),
-    component: null
-  },
-  'NewListing': {
-    icon: require('./src/app/images/icon-newlisting@3x.png'),
-    component: null
   }
 };
 
