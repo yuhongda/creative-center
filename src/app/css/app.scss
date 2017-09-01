@@ -1,0 +1,125 @@
+@import "./config";
+
+@font-face {
+    font-family: FZYouHJW;
+    src: url('./fonts/FZYouHJW_Xian.eot');
+    src: url('./fonts/FZYouHJW_Xian.eot?#iefix') format("embedded-opentype"),url('./fonts/FZYouHJW_Xian.woff') format("woff"),url('./fonts/FZYouHJW_Xian.ttf') format("truetype"),url('./fonts/FZYouHJW_Xian.svg#open_sansregular') format("svg");
+    font-weight: 200;
+    font-style: normal
+}
+
+@font-face {
+    font-family: FZYouHJW;
+    src: url('./fonts/FZYouHJW_ChaoXi.eot');
+    src: url('./fonts/FZYouHJW_ChaoXi.eot?#iefix') format("embedded-opentype"),url('./fonts/FZYouHJW_ChaoXi.woff') format("woff"),url('./fonts/FZYouHJW_ChaoXi.ttf') format("truetype"),url('./fonts/FZYouHJW_ChaoXi.svg#open_sansregular') format("svg");
+    font-weight: 200;
+    font-style: normal
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2){html{-webkit-text-size-adjust:none}}
+body,div,p,h1,h2,h3,h4,h5,h6,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,table,th,td{margin:0;padding:0;}address,cite,em,i{font-style:normal;}li{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}legend{color:#000;}fieldset,img{border:0;}table{border-collapse:collapse;border-spacing:0;}
+body {
+    color:#333; background:#efefef;
+    -webkit-appearance: none;
+    -webkit-font-smoothing:auto;
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+.clearfix:after, .wrapper:after { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.clearfix { display: inline-block; }
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+
+.tl { text-align:left;}
+.tc { text-align:center;}
+.tr { text-align:right;}
+.fl { float:left;}
+.fr { float:right;}
+.layout-box { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; }
+
+#app {
+    padding-top: $headerHeight;
+}
+
+:global {
+    .vic-area-chart-area {
+        $dayHeatMapChartHeight: 420px;
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            height: $dayHeatMapChartHeight * 1.5;
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+            height: $dayHeatMapChartHeight * 2;
+        }
+    }
+
+
+    @mixin CCProgress($ratio) {
+        padding:50px * ($ratio - 0.5) 40px * $ratio !important;
+        //overflow: visible !important;
+        .ccProgressInner{
+            $innerHeight: 8px;
+            height: $innerHeight * $ratio !important;
+            margin: auto 40px * $ratio;
+            .currentProgress{
+                height:$innerHeight * $ratio !important;
+                border-radius: $innerHeight * $ratio !important;
+
+                &:after{
+                    width:2px * $ratio !important;
+                    height: 20px * $ratio !important;
+                    top: -6px * $ratio !important;
+                }
+                span{
+                    bottom:-20px * $ratio !important;
+                    width:200px * $ratio !important;
+                    right:-100px * $ratio !important;
+                    font-size: 12px * $ratio !important;
+                }
+            }
+
+            .targetProgress{
+                width:2px * $ratio !important;
+                height: 20px * $ratio !important;
+                top: -6px * $ratio !important;
+
+                span{
+                    top:-15px * $ratio !important;
+                    width:200px * $ratio !important;
+                    left:-100px * $ratio !important;
+                    font-size: 12px * $ratio !important;
+                }
+            }
+        }
+    }
+
+    .ccProgress{
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            @include CCProgress(2);
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+            @include CCProgress(3);
+        }
+    }
+
+    .popup-list-empty {
+        .con {
+            color: #999;
+            height: 5rem;
+            line-height: 5rem;
+            text-align: center;
+        }
+    }
+
+    .popup-list {
+        .am-list-body {
+            height: 5rem;
+            overflow: auto;
+        }
+    }
+
+    .am-popup {
+        z-index: 9999999;
+    }
+}

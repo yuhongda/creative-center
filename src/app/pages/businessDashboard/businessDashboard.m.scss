@@ -1,0 +1,38 @@
+@import "../../css/mixins";
+
+.pName {
+  color: #b9c0cf;
+  font-size: 0.8em;
+  text-align: center;
+}
+.pValue {
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: bold;
+  text-align: center;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    font-size: 1.7em;
+    line-height: 1.7em;
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+    font-size: 2em;
+    line-height: 2em;
+  }
+}
+.pName.emphasis, .pValue.emphasis {
+  color: #df4545;
+}
+
+.progressList {
+  padding-top: 1em;
+  & > .progressListItem {
+    & > div:first-child {
+      padding: 0.2rem 0;
+    }
+    & > div:last-child {
+      background: #f9f9f9;
+    }
+  }
+}

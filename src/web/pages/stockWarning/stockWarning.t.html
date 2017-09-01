@@ -1,0 +1,287 @@
+<template name="stockWarning">
+  <div class="{styles.stockWarning}">
+    <!--查询条件-->
+    <div class="{styles.searchWrap}">
+        <conditionsStock {onSearch} showDept showDataRange showCategory showBrand showDate />
+    </div>
+    <div class="{styles.pageCnt}">
+      <warningSummary />
+    </div>
+
+    <div class="{styles.pageCnt}">
+     <ant-Tabs defaultActiveKey="stockPause">
+       <ant-TabPane tab="缺货暂停金额" key="stockPause">
+          <stockPauseTbox/>
+       </ant-TabPane>
+       <ant-TabPane tab="无货PV" key="stockOutPV">
+           <stockOutPVTBox />
+       </ant-TabPane>
+       <ant-TabPane tab="下柜库存金额" key="belowStock">
+           <belowStockTbox />
+       </ant-TabPane>
+       <ant-TabPane tab="库存缺货" key="stockOut">
+           <stockOutTbox />
+       </ant-TabPane>
+       <ant-TabPane tab="滞销商品" key="deadStock">
+           <deadStockTbox />
+       </ant-TabPane>
+     </ant-Tabs>
+   </div>
+  </div>
+</template>
+
+<template name="warningSummary">
+  <div class="{styles.warningSummary}">
+    <div class="{styles.summaryTitle}">
+      <div class="{styles.popMenu}">
+        <ant-Tooltip placement="topRight" overlayClassName="{styles.tooltipClass}">
+           <@title>
+             <dl>
+               <dt>选择需要的属性</dt>
+               <dd>
+                 <ant-CheckboxGroup {value} {options} {onChange} />
+               </dd>
+             </dl>
+           </@title>
+           <ant-Icon type="setting" />
+         </ant-Tooltip>
+      </div>
+       <h2 class="{styles.pageTitle}">库存健康监控</h2>
+    </div>
+    <fj-Row class="{styles.summary} clearfix">
+      <#if {stockWarning.value.('indexOf')_('noStock') > (-1)}>
+      <fj-Col l="3">
+        <div class="{styles.summaryItem}">
+          <div class="{styles.field}">缺货暂停金额
+            <ant-Popover content={popStockPause} title="指标释义">
+              <ant-Icon type="question-circle" />
+            </ant-Popover>
+          </div>
+          <div class="{styles.num}"><em>{stockWarning.warningSummary.noStockStopMoney}</em>万元</div>
+          <div class="{styles.rates} clearfix">
+            <span class="{stockWarning.warningSummary.noStockStopGrowth >(0) ?(styles.red,styles.green)}">
+              {stockWarning.warningSummary.noStockStopGrowth >(0) ?('+','')}{stockWarning.warningSummary.noStockStopGrowth}%
+            </span>
+          </div>
+        </div>
+      </fj-Col>
+      </#if>
+      <#if {stockWarning.value.('indexOf')_('PV') > (-1)}>
+      <fj-Col l="3">
+        <div class="{styles.summaryItem}">
+          <div class="{styles.field}">无货PV商品占比
+            <ant-Popover content={popStockPV} title="指标释义">
+              <ant-Icon type="question-circle" />
+            </ant-Popover>
+          </div>
+          <div class="{styles.num}"><em>{stockWarning.warningSummary.pvMoney}%</em></div>
+          <div class="{styles.rates} clearfix">
+              <span class="{stockWarning.warningSummary.pvGrowth >(0) ?(styles.red,styles.green)}">
+                 {stockWarning.warningSummary.pvGrowth >(0) ?('+','')}{stockWarning.warningSummary.pvGrowth}%
+              </span>
+          </div>
+        </div>
+      </fj-Col>
+      </#if>
+      <#if {stockWarning.value.('indexOf')_('noSales') > (-1)}>
+      <fj-Col l="3" class="{stockWarning.showItem > (0) ?(styles.hideItem,styles.showItem)}">
+        <div class="{styles.summaryItem}">
+          <div class="{styles.field}">下柜库存金额
+            <ant-Popover content={popBlowStock} title="指标释义">
+              <ant-Icon type="question-circle" />
+            </ant-Popover>
+          </div>
+          <div class="{styles.num}"><em>{stockWarning.warningSummary.noSalesMoney}</em>万元</div>
+          <div class="{styles.rates} clearfix">
+            <span class="{stockWarning.warningSummary.noSalesGrowth >(0) ?(styles.red,styles.green)}">
+               {stockWarning.warningSummary.noSalesGrowth >(0) ?('+','')}{stockWarning.warningSummary.noSalesGrowth}%
+            </span>
+          </div>
+        </div>
+      </fj-Col>
+      </#if>
+      <#if {stockWarning.value.('indexOf')_('outOfStock') > (-1)}>
+      <fj-Col l="3">
+        <div class="{styles.summaryItem}">
+          <div class="{styles.field}">库存缺货商品占比
+            <ant-Popover content={popStockOut} title="指标释义">
+              <ant-Icon type="question-circle" />
+            </ant-Popover>
+          </div>
+          <div class="{styles.num}"><em>{stockWarning.warningSummary.outOfStockMoney}%</em></div>
+          <div class="{styles.rates} clearfix">
+              <span class="{stockWarning.warningSummary.outOfStockGrowth >(0) ?(styles.red,styles.green)}">
+                 {stockWarning.warningSummary.outOfStockGrowth >(0) ?('+','')}{stockWarning.warningSummary.outOfStockGrowth}%
+              </span>
+          </div>
+        </div>
+      </fj-Col>
+      </#if>
+      <#if {stockWarning.value.('indexOf')_('unsalable') > (-1)}>
+      <fj-Col l="3">
+        <div class="{styles.summaryItem}">
+          <div class="{styles.field}">滞销商品占比
+            <ant-Popover content={popDeadStock} title="指标释义">
+              <ant-Icon type="question-circle" />
+            </ant-Popover>
+          </div>
+          <div class="{styles.num}"><em>{stockWarning.warningSummary.unsalableMoney}%</em></div>
+          <div class="{styles.rates} clearfix">
+            <span class="{stockWarning.warningSummary.unsalableGrowth >(0) ?(styles.red,styles.green)}">
+              {stockWarning.warningSummary.unsalableGrowth >(0) ?('+','')}{stockWarning.warningSummary.unsalableGrowth}%
+            </span>
+         </div>
+        </div>
+      </fj-Col>
+      </#if>
+    </fj-Row>
+  </div>
+</template>
+
+<!--# Tbox1 stockPause 缺货暂停金额 #-->
+<template name="stockPauseTbox">
+  <div class="{styles.stockWarningGroupWrap}">
+    <div class="{styles.tabCnt}">
+      <div class="{styles.tabox}">
+      <fj-Row class="clearfix">
+        <fj-Col l="5">
+          <div class="{styles.ecWrap}">
+              <ec-BarChart ref="ecStockPause" option={stockPauseOption} data={stockPauseData} height={430} />
+            </div>
+        </fj-Col>
+        <fj-Col l="7">
+          <div class="{styles.blockWrapRight}">
+            <div class="{styles.blockTit}">
+              <#include name="downloadForm" src="./downloadTable.t.html" />
+              <h4> {stockWarning.stockPauseSeriesName} 暂停订单商品列表</h4>
+            </div>
+            <div class="{styles.tableWrap}">
+                 <ant-Table  pagination={false} columns={stockPauseTableColumns} dataSource={stockPauseTableData} scroll={stockPauseScrollNum} />
+            </div>
+          </div>
+        </fj-Col>
+      </fj-Row>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--# Tbox2 stockOutPV 无货PV #-->
+<template name="stockOutPVTBox">
+  <div class="{styles.stockWarningGroupWrap}">
+    <div class="{styles.tabCnt}">
+      <div class="{styles.tabox}">
+      <fj-Row class="clearfix">
+        <fj-Col l="5">
+          <div class="{styles.radioBox}">
+            <ant-RadioGroup defaultValue="a" size="default" onChange={onStockTypeChange}>
+              <ant-RadioButton value="a">无货PV商品分布</ant-RadioButton>
+              <ant-RadioButton value="b">商品无货原因分布</ant-RadioButton>
+            </ant-RadioGroup>
+          </div>
+            <#if {switchIndex ==('a')}>
+              <ec-BarChart ref="ecBarStockOutPV" option={barStockOutPVOption} data={barStockOutPVData} height={400} />
+              <#else>
+              <ec-PieChart ref="ecPieStockOutPV" option={stockOutPVOption} data={stockOutPVData} />
+              </#else>
+            </#if>
+        </fj-Col>
+        <fj-Col l="7">
+          <div class="{styles.blockWrapRight}">
+            <div class="{styles.blockTit}">
+              <#include name="downloadForm" src="./downloadTable.t.html" />
+              <a href="#/OutOfStockReason" class="{styles.btnCause}">缺货原因录入</a>
+              <h4>
+                {stockWarning.stockOutPVBarName}——无货PV商品分布
+              </h4>
+            </div>
+            <div class="{styles.tableWrap}">
+                <ant-Table  pagination={false} columns={stockOutPVTableColumns} dataSource={stockOutPVBarTableData} scroll={stockOutPVScrollNum} />
+            </div>
+          </div>
+        </fj-Col>
+      </fj-Row>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--# Tbox3 belowStock 下柜库存金额 #-->
+<template name="belowStockTbox">
+  <div class="{styles.stockWarningGroupWrap}">
+    <div class="{styles.tabCnt}">
+      <div class="{styles.tabox}">
+      <fj-Row class="clearfix">
+        <fj-Col l="5">
+            <ec-PieChart ref="ecBelowStock" option={belowStockOption} data={belowStockData} />
+        </fj-Col>
+        <fj-Col l="7">
+          <div class="{styles.blockWrapRight}">
+              <div class="{styles.blockTit}">
+                <#include name="downloadForm" src="./downloadTable.t.html" />
+                <h4>{stockWarning.belowStockName}——下柜库存金额商品列表</h4>
+              </div>
+             <div class="{styles.tableWrap}">
+                <ant-Table  pagination={false} columns={belowStockTableColumns} dataSource={belowStockTableData} scroll={belowStockScrollNum} />
+              </div>
+          </div>
+        </fj-Col>
+      </fj-Row>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--# Tbox4 stockOut 库存缺货 #-->
+<template name="stockOutTbox">
+  <div class="{styles.stockWarningGroupWrap}">
+    <div class="{styles.tabCnt}">
+      <div class="{styles.tabox}">
+      <fj-Row class="clearfix">
+        <fj-Col l="5">
+          <div class="{styles.ecWrap}">
+              <ec-BarChart ref="ecStockOut" option={barStockOutOption} data={barStockOutData} height={400} />
+            </div>
+        </fj-Col>
+        <fj-Col l="7">
+            <div class="{styles.blockWrapRight}">
+              <div class="{styles.blockTit}">
+                <#include name="downloadForm" src="./downloadTable.t.html" />
+                <h4>{stockWarning.stockOutName}——库存缺货商品列表</h4>
+              </div>
+              <div class="{styles.tableWrap}">
+                 <ant-Table  pagination={false} columns={stockOutTableColumns} dataSource={stockOutTableData} scroll={stockOutScrollNum} />
+              </div>
+            </div>
+        </fj-Col>
+      </fj-Row>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--# Tbox5 deadStock 滞销商品 #-->
+<template name="deadStockTbox">
+  <div class="{styles.stockWarningGroupWrap}">
+    <div class="{styles.tabCnt}">
+      <div class="{styles.tabox}">
+      <fj-Row class="clearfix">
+        <fj-Col l="5">
+            <ec-PieChart ref="ecDeadStock" option={deadStockOption} data={deadStockData} />
+        </fj-Col>
+        <fj-Col l="7">
+          <div class="{styles.blockWrapRight}">
+            <div class="{styles.blockTit}">
+              <#include name="downloadForm" src="./downloadTable.t.html" />
+              <h4>{stockWarning.deadStockName}——滞销商品列表</h4>
+            </div>
+            <div class="{styles.tableWrap}">
+               <ant-Table  pagination={false} columns={deadStockTableColumns}  dataSource={deadStockTableData} scroll={deadStockScrollNum} />
+            </div>
+          </div>
+        </fj-Col>
+      </fj-Row>
+      </div>
+    </div>
+  </div>
+</template>

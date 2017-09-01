@@ -1,0 +1,134 @@
+<template name="marketCompetition">
+  <div class="{styles.marketCompetition}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategoryHasLevel4 showDate  defaultValueType=4/>    
+    <div class="{styles.tabWrap}">
+      <ant-Tabs defaultActiveKey="1" onChange={callback}>
+        <ant-TabPane tab="品牌概况" key="1">
+          <brandSummary />
+          <brandRank />
+        </ant-TabPane>
+        <ant-TabPane tab="品牌定位" key="2">
+          <brandPortrait />
+        </ant-TabPane>
+      </ant-Tabs>
+    </div>
+  </div>
+</template>
+
+<template name="brandSummary">
+  <div class="{styles.brandSummary}">
+    <div class="{styles.pageSubTitle}">
+      品牌概况
+    </div>
+    <ec-ScatterChart ref="ecBrandSummary" option={brandSummaryOption} data={brandSummaryData} width={600} height={500} />
+  </div>
+</template>
+
+<template name="brandRank">
+  <div class="{styles.brandRank}">
+    <div>
+        <ant-RadioGroup defaultValue="province" size="large" onChange={onRankTypeChange}>
+          <ant-RadioButton value="province">省份分析</ant-RadioButton>
+          <ant-RadioButton value="city">城市级别</ant-RadioButton>
+        </ant-RadioGroup>
+    </div>
+    <fj-Row class="clearfix" gutter="20">
+      <fj-Col l="8" style="height:600px;">
+        <div class="{styles.mapWrap} {rankType == ('province') ?(styles.isMap,'')}">
+          <div class="{styles.tit}" style="width:90%;">品类全国销售额分布</div>
+          <ec-MapChart ref="ecMap" option={mapOption} data={mapData} height={500} />
+        </div>
+        <div class="{styles.chartWrap} {rankType == ('city') ?(styles.isChart,'')}" style="width:90%;">
+          <div class="{styles.tit}">品类城市级别销售额占比</div>
+          <ec-BarChart ref="ecCityBar" option={toJS(cityBarOptions)} data={toJS(cityBarData)} height={500}/>
+        </div>
+      </fj-Col>
+      <fj-Col l="4">
+        <div class="{styles.tit} middle">
+          <span>{rankTitle} - 品牌排名</span>
+          <#if {rankType == 'province' &&(rankTitle != '全国')}>
+          <ant-Button onClick={onResetClicked} size="small"><ant-Icon type="close" /></ant-Button>
+          </#if>
+        </div>
+        <ant-Table columns={toJS(tableBrandRankColumns)} dataSource={toJS(tableBrandRankData)} size="middle" pagination={false} />
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>
+
+<template name="brandPortrait">
+  <div class="{styles.brandPortrait}">
+    <div class="{styles.pageSubTitle}">
+      <div class="fr">
+        <ant-Popover content={popTagsCnt} placement="bottomRight" title="选择需要的指标" trigger="click">
+          <ant-Icon class="{styles.iconSetting}" type="setting" />
+        </ant-Popover>
+      </div>
+      品牌画像
+    </div>
+    <#if {isEmpty}>
+      <div class="{styles.isEmpty}">暂无数据</div>
+      <#else>
+        <fj-Row class="clearfix" gutter="20">
+          <fj-Col l="3">
+            <div class="{styles.leftWrap}">
+              <div class="{styles.tit}">选择品牌</div>
+              <div>
+                  <ant-Select style="width:60%" onChange={onMainBrandChange} value={marketCompetition.compareMainBrandId} placeholder="请选择">
+                    <#each {brandDataWithoutAll}>
+                      <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+                    </#each>
+                  </ant-Select>
+              </div>
+              <div class="{styles.tit}">选择对比品牌</div>
+              <div class="{styles.btnWrap}">
+                <#if {marketCompetition.compareBrandCount.('length') < 3}>
+                <ant-Button onClick={addCompareBrand}><ant-Icon type="plus" />添加对比品牌</ant-Button>
+                </#if>
+              </div>
+              <#each {marketCompetition.compareBrandCount}>
+              <div class="{styles.selectWrap}" key={@index}>
+                <ant-Select style="width:60%" value={value} onChange={onBrandChange(@index)} placeholder="请选择">
+                  <#each {brandDataWithoutAll}>
+                    <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+                  </#each>
+                </ant-Select>
+                <ant-Button onClick={delBrand(@index)} size="small"><ant-Icon type="close" /></ant-Button>
+              </div>
+              </#each>
+            </div>
+            <div class="{styles.doCompareWrap}">
+              <ant-Button type="primary" onClick={doCompare}>开始比较</ant-Button>
+            </div>
+          </fj-Col>
+          <fj-Col l="9">
+            <div class="{styles.tit} {styles.tit2} middle"><ant-Icon class="{styles.iconTag}" type="tag-o" />品牌标签</div>
+            <div class="{styles.tagWrap}">
+              <ant-RadioGroup value={marketCompetition.selectedTag} size="large" onChange={onTagChange}>
+                <#each {checkedBrandTags}>
+                  <ant-RadioButton value={tagId} key={@index}>{tagName}</ant-RadioButton>
+                </#each>
+              </ant-RadioGroup>
+            </div>
+            <div class="{styles.tit} {styles.tit2}" style="margin-top:30px;">{selectedTagName}-销售贡献对比</div>
+            <ec-BarChart ref="ecBrandPortrait" option={toJS(brandPortraitOptions)} data={toJS(brandPortraitData)} update={true}/>
+          </fj-Col>
+        </fj-Row>
+      </#else>
+    </#if>
+  </div>
+</template>
+
+<template name="popTagsCnt">
+  <div>
+    <ul>
+      <#each {marketCompetition.brandTagData}>
+      <li key={@index}>
+        <ant-Checkbox onChange={onTagChecked(tagId)} checked={checked}>{tagName}</ant-Checkbox>
+      </li>
+      </#each>
+    </ul>
+  </div>
+</template>
+

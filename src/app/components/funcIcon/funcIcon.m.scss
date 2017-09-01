@@ -1,0 +1,17 @@
+﻿.funcIcon {
+  & > .ico {
+    text-align: center;
+
+    & > img {
+      max-width: 80%;
+    }
+  }
+  & > .ttl {
+    font-size: .86em;
+    text-align: center;
+  }
+}
+
+.funcIconDisabled {
+  opacity: 0.2;
+}

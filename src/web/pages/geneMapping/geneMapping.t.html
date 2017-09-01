@@ -1,0 +1,105 @@
+<template name="geneMapping">
+  <div class="{styles.stockMarketing}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategoryHasLevel4 showDate defaultValueType=4 />
+    <div class="{styles.pageCnt}">
+      <h2 class="{styles.pageTitle}">市场基因图谱</h2>
+
+      <!-- 需求洞察 -->
+      <requirementInsight />
+
+      <!-- 基因链分析 -->
+      <geneLinkAnalysis />
+    </div>
+    
+  </div>
+</template>
+
+<template name="requirementInsight">
+  <div class="{styles.requirementInsight}">
+    <div class="{styles.pageSubTitle}">需求洞察</div>
+    <fj-Row class="{styles.tableWrap} clearfix">
+        <fj-Col l="3">
+          <div class="{styles.tableTit}"><ant-Icon type="solution" />消费者决策树</div>
+          <ant-Table columns={toJS(tablePropColumns)} dataSource={tablePropData} size="middle" pagination={false} onRowClick={onPropSelected} rowClassName={renderRowClass} />
+          <ant-Input placeholder="输入线下消费者决策因素排名" class="{styles.txtRankOffline}" onBlur={setOfflineRank} onPressEnter={setOfflineRank} />
+        </fj-Col>
+        <fj-Col l="9" class="{styles.subTableWrap}">
+          <div class="{styles.tab} middle">
+            <ant-Icon type="paper-clip" />
+            <span class="{styles.subTableType}">{subName}</span>
+            <span class="{currentSubTable ==('jd') ?('',styles.iconGray)} {styles.iconJD}" onClick="{switchSubTable('jd')}"></span>
+            <span class="{currentSubTable ==('pg') ?('',styles.iconGray)} {styles.iconPG}" onClick="{switchSubTable('pg')}"></span>
+          </div>
+          <ant-Table columns={toJS(tableSubPropColumns)} dataSource={toJS(tableSubPropData)} size="middle" pagination={false} />
+        </fj-Col>
+    </fj-Row>
+  </div>
+</template>
+
+<template name="geneLinkAnalysis">
+  <div class="{styles.geneLinkAnalysis}">
+    <div class="{styles.pageSubTitle}">
+      <div class="{styles.toolbar} fr">
+        <span class="{currentView ==(1) ?(styles.iconChartOn,styles.iconChart)}" onClick={switchView(1)}></span>
+        <span class="{currentView ==(2) ?(styles.iconTableOn,styles.iconTable)}" onClick={switchView(2)}></span>
+      </div>
+      基因链分析
+    </div>
+
+    <fj-Row class="clearfix">
+        <fj-Col l="3" class="{styles.geneLinkAnalysisLeft}">
+          <div>
+            <ant-Icon type="file-text" />
+            <span>决策树调整</span>
+          </div>
+          <div class="{styles.propList}">
+            <div>属性一</div>
+            <ant-Select style="width:100%;" placeholder="请选择" onChange={onPropList1Change} value="{geneMapping.selectedProp1 +('')}">
+              <#each {propData1}>
+                <ant-Option value="{id +('')}" key={@index}>{name}</ant-Option>
+              </#each>
+            </ant-Select>
+          </div>
+          <div class="{styles.propList}">
+            <div>属性二</div>
+            <ant-Select style="width:100%;" placeholder="请选择" onChange={onPropList2Change} value="{geneMapping.selectedProp2 +('')}">
+              <#each {propData2}>
+                <ant-Option value="{id +('')}" key={@index}>{name}</ant-Option>
+              </#each>
+            </ant-Select>
+          </div>
+        </fj-Col>
+        <fj-Col l="9" class="{styles.geneLinkAnalysisRight}">
+          <#if {currentView ==(1)}>
+          <div class="{styles.treeViewWrap}">
+            <#if {isFetching}>
+              <div class="{styles.fetching}" key="fetching">正在获取数据...<ant-Icon type="loading" /></div>
+              <#else>
+                <#if {geneMapping.selectedProp1 !=(0) &&(geneMapping.selectedProp2 !=(0))}>
+                  <ant-RadioGroup defaultValue="sales" size="large" onChange={onTreeToolbarChange}>
+                    <ant-RadioButton value="sales">销售额占比</ant-RadioButton>
+                    <ant-RadioButton value="uv">UV占比</ant-RadioButton>
+                  </ant-RadioGroup>
+                  <div class="{styles.treeviewLegend}">
+                    <div>高</div>
+                    <img src="{arrow}" alt="">
+                    <div>低</div>
+                  </div>
+                  <cc-Tree data={treeViewData} {...treeViewProps} />
+                </#if> 
+                <#if {geneMapping.selectedProp1 ==(0) || (geneMapping.selectedProp2 ==(0))}>
+                  <div class="{styles.empty}" key="empty">请在左侧选择属性</div>
+                </#if>
+              </#else>
+            </#if>
+          </div>
+            <#else>
+              <ant-Table columns={tableColumns} dataSource={tableData} scroll={tableScroll} />
+            </#else>
+          </#if>          
+        </fj-Col>
+    </fj-Row>
+
+  </div>
+</template>

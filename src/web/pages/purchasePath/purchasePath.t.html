@@ -1,0 +1,232 @@
+<template name="purchasePath">
+  <section class="{styles.wrap}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategory showBrand showDate defaultValueType=2 />
+    <div class="{styles.itemBlock}">
+      <h2 class="{styles.pageTitle}">购物路径</h2>
+      <UserPathData />
+      <div class="{styles.userPathChartNumber} {styles.blank}">
+        <UserPathChartNumber />
+      </div>
+      <div class="{styles.userPathTopSku} {styles.blank}">
+        <UserPathTopSku />
+      </div>
+      <div class="{styles.userPathTopSkuKeyword} {styles.blank}">
+        <UserPathTopSkuKeyword />
+      </div>
+  </section>
+</template>
+
+<template name="userPathData">
+  <ant-Card title="流量趋势-UV">
+    <ec-LineChart option={toJS(lineChartOptions)} data={toJS(lineChartData)} update={true} />
+  </ant-Card>
+</template>
+
+<template name="userPathChartNumber">
+   <ant-Card title="流量来源">
+     <@extra>
+      <div>
+        <div class="{styles.typeName}">移动</div>
+        <div class="{styles.download} {showDownload}" title="下载" onClick="{download}"><ant-Icon type="download" /></div>
+        <div class="{styles.switch}"><ant-Switch checkedChildren="表格" unCheckedChildren="图表" onChange="{switchChange}" /></div>
+      </div>
+     </@extra>
+    <div class="{styles.box}">
+      <fj-row right="180">
+        <ec-barChart option={toJS(barChartOptions)} data={toJS(barChartData)} update={true} />
+      </fj-row>
+      <fj-rowright width="165" class="{styles.right}">
+        <ul>
+          <#each {userPathNumber}>
+          <li key="{name}"><h1>{name}</h1><h2>{value !=('-') ?(value | toFixed(1) + ('%'), '-')}</h2></li>
+          </#each>
+        </ul>
+      </fj-rowright>
+      <div class="{styles.tableArea} {isShowTable}">
+        <ant-Table {columns} {dataSource} pagination="{false}" size="middle" rowKey="key" {scroll} {bordered} />
+      </div>
+    </div>
+  </ant-Card>
+</template>
+
+<template name="userPathTopSku">
+  <ant-Card title="爆款SKU">
+    <div class="{styles.filterBox} vic-clearfix">
+        <fj-rowLeft width="150"><ant-Input placeholder="请输入SKUID" value="{inputValue}" onChange="{inputChange}"  onPressEnter="{inputSubmit}" onBlur="{inputSubmit}" /></fj-rowLeft>
+        <#if {isSkuID}>
+          <div class="{styles.redAlert}">请输入正确的Sku ID</div>
+        </#if>
+        <fj-rowRight width="200">
+          <ant-RadioGroup onChange="{radioChange}" defaultValue="dataVol">
+            <ant-RadioButton value="dataVol">浏览量</ant-RadioButton>
+            <ant-RadioButton value="order">下单量</ant-RadioButton>
+          </ant-RadioGroup>
+        </fj-rowRight>
+      </fj-row>
+    </div>
+    <ant-Table {columns} {dataSource} pagination="{false}" size="middle" rowKey="key" {scroll} {bordered} />
+    <ant-Modal {visible} onCancel="{closeModal}" {width} title="{modalTitle}" footer="{null}" wrapClassName="{styles.modalView}">
+      <div class="{styles.modalTitle}">
+        <fj-rowRight width="90"><ant-Switch {checked} checkedChildren="图表" unCheckedChildren="表格" onChange="{switchChange}" /></fj-rowRight>
+      </div>
+      <div class="{styles.box}">
+        <ant-Table columns="{modalColumns}" dataSource="{toJS(modalDataSource)}" pagination="{false}" size="middle" rowKey="key" scroll="{modalScroll}" {bordered} />
+        <div class="{styles.chartArea} {isShowChart}">
+          <BarChart {data} />
+        </div>
+      </div>
+    </ant-Modal>
+  </ant-Card>
+</template>
+
+<template name="barChart">
+  <ec-barChart option={toJS(barChartOptions)} data={toJS(barChartData)} update={true} />
+</template>
+
+<template name="userPathTopSkuKeyword">
+  <ant-Card title="搜索热词">
+    <fj-row class="{styles.titleBox} vic-clearfix">
+      <fj-col l=3>
+        <fj-row class="vic-clearfix">
+          <fj-col l=6 class="{styles.line}">搜索词</fj-col>
+          <fj-col l=6 class="{styles.line}">搜索次数</fj-col>
+        </fj-row>
+      </fj-col>
+      <fj-col l=3>
+        <fj-row class="vic-clearfix">
+          <fj-col l=6 class="{styles.line}">搜索词</fj-col>
+          <fj-col l=6 class="{styles.line}">搜索次数</fj-col>
+        </fj-row>
+      </fj-col>
+      <fj-col l=3>
+        <fj-row class="vic-clearfix">
+          <fj-col l=6 class="{styles.line}">搜索词</fj-col>
+          <fj-col l=6 class="{styles.line}">搜索次数</fj-col>
+        </fj-row>
+      </fj-col>
+      <fj-col l=3>
+        <fj-row class="vic-clearfix">
+          <fj-col l=6 class="{styles.line}">搜索词</fj-col>
+          <fj-col l=6 class="{styles.line}">搜索次数</fj-col>
+        </fj-row>
+      </fj-col>
+    </fj-row>
+    <div class="{styles.box}">
+      <ul class="vic-clearfix">
+        <li>
+          <#each {toJS(data[0])}>
+          <fj-row class="{styles.listBox} vic-clearfix" key="{key}" title="{keyword}">
+            <fj-col l=6 class="{styles.line}">
+              <#if {key %(5) |parseInt ==(1)}>
+                  <span class="{styles.icon1}">{key}</span>
+                <#elseif {key %(5) |parseInt ==(2)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(3)}>
+                  <span class="{styles.icon3}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(4)}>
+                  <span class="{styles.icon1}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(0)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+              </#if>
+              {keyword}
+            </fj-col>
+            <fj-col l=6 class="{styles.line}">
+              <i>{value}</i>
+              <s><ant-progress percent="{precent}" strokeWidth="{5}" showInfo="{false}" status="{success}" /></s>
+            </fj-col>
+          </fj-row>
+          </#each>
+        </li>
+        <li>
+          <#each {toJS(data[1])}>
+          <fj-row class="{styles.listBox} vic-clearfix" key="{key}" title="{keyword}">
+            <fj-col l=6 class="{styles.line}">
+              <#if {key %(5) |parseInt ==(1)}>
+                  <span class="{styles.icon1}">{key}</span>
+                <#elseif {key %(5) |parseInt ==(2)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(3)}>
+                  <span class="{styles.icon3}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(4)}>
+                  <span class="{styles.icon1}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(0)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+              </#if>
+              {keyword}
+            </fj-col>
+            <fj-col l=6 class="{styles.line}">
+              <i>{value}</i>
+              <s><ant-progress percent="{precent}" strokeWidth="{5}" showInfo="{false}" status="{success}" /></s>
+            </fj-col>
+          </fj-row>
+          </#each>
+        </li>
+        <li>
+          <#each {toJS(data[2])}>
+          <fj-row class="{styles.listBox} vic-clearfix" key="{key}" title="{keyword}">
+            <fj-col l=6 class="{styles.line}">
+              <#if {key %(5) |parseInt ==(1)}>
+                  <span class="{styles.icon1}">{key}</span>
+                <#elseif {key %(5) |parseInt ==(2)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(3)}>
+                  <span class="{styles.icon3}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(4)}>
+                  <span class="{styles.icon1}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(0)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+              </#if>
+              {keyword}
+            </fj-col>
+            <fj-col l=6 class="{styles.line}">
+              <i>{value}</i>
+              <s><ant-progress percent="{precent}" strokeWidth="{5}" showInfo="{false}" status="{success}" /></s>
+            </fj-col>
+          </fj-row>
+          </#each>
+        </li>
+        <li>
+          <#each {toJS(data[3])}>
+          <fj-row class="{styles.listBox} vic-clearfix" key="{key}" title="{keyword}">
+            <fj-col l=6 class="{styles.line}">
+              <#if {key %(5) |parseInt ==(1)}>
+                  <span class="{styles.icon1}">{key}</span>
+                <#elseif {key %(5) |parseInt ==(2)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(3)}>
+                  <span class="{styles.icon3}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(4)}>
+                  <span class="{styles.icon1}">{key}</span>
+                </#elseif>
+                <#elseif {key %(5) |parseInt ==(0)}>
+                  <span class="{styles.icon2}">{key}</span>
+                </#elseif>
+              </#if>
+              {keyword}
+            </fj-col>
+            <fj-col l=6 class="{styles.line}">
+              <i>{value}</i>
+              <s><ant-progress percent="{precent}" strokeWidth="{5}" showInfo="{false}" status="{success}" /></s>
+            </fj-col>
+          </fj-row>
+          </#each>
+        </li>
+      </ul>
+    </div>
+  </ant-Card>
+</template>

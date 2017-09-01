@@ -1,0 +1,56 @@
+<template name="marketingSelection">
+  <div class="{styles.marketingSelection}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategory showBrand showDate defaultValueType=1 />
+    
+    <productPosition />
+    
+    <tablePortrait />
+  </div>
+</template>
+
+
+
+<template name="productPosition">
+  <div class="{styles.productPosition}">
+    <div class="{styles.pageSubTitle}">
+      商品定位
+    </div>
+    <fj-Row class="clearfix" gutter="20">
+      <fj-Col l="6">
+        <div class="{styles.blockTit}">band商品数量分布</div>
+        <ec-PieChart ref="ecBandPie" option={toJS(bandPieChartOptions)} data={toJS(bandPieChartData)} height={500}/>
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="{styles.blockTit}">{bandTitle ||('')} band 商品角色</div>
+        <ec-ScatterChart ref="ecBandProductRole" option={bandProductRoleChartOption} data={bandProductRoleChartData} width={600} height={500} />        
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>
+
+<template name="tablePortrait">
+  <div class="{styles.tablePortrait}">
+    <div>
+      <div class="fr">
+        <form action={downloadUrl} target="ifrExport" method="post" ref="formExport">
+          <input type="hidden" name="deptId" value="{conditions.deptId}">
+          <input type="hidden" name="categoryId1" value="{conditions.categoryId1}">
+          <input type="hidden" name="categoryId2" value="{conditions.categoryId2}">
+          <input type="hidden" name="categoryId3" value="{conditions.categoryId3}">
+          <input type="hidden" name="brandId" value="{conditions.brandId}">
+          <input type="hidden" name="date" value="{conditions.date}">
+          <input type="hidden" name="listType" value="{marketingSelection.listType}">
+          <iframe style="display:none" id="ifrExport" name="ifrExport" src="about:blank"></iframe>
+          <ant-Button onClick={downloadEvent}><ant-Icon type="download" /></ant-Button>
+        </form>
+      </div>
+      <ant-RadioGroup size="large" defaultValue="1" onChange={onListTypeChange}>
+        <ant-RadioButton value="1">日常爆品</ant-RadioButton>
+        <ant-RadioButton value="2">日常流量品</ant-RadioButton>
+        <ant-RadioButton value="3">长尾商品</ant-RadioButton>
+      </ant-RadioGroup>
+    </div>
+    <ant-Table columns={toJS(tablePortraitColumns)} dataSource={tablePortraitData} size="middle" pagination={false} onRowClick={onBrandSelected} rowClassName={renderRowClass} scroll={tableScroll} />
+  </div>
+</template>

@@ -1,0 +1,283 @@
+<template name="competitivePriceModel">
+  <div class="{styles.competitivePriceModel}">
+    <fj-Row class="{styles.summary}" clearfix>
+      <fj-Col l="2">
+          <span class="{styles.imgBox}"><img src="{iconGraph}" alt=""></span>
+      </fj-Col>
+      <fj-Col l="10">
+          <div class="{styles.txtarea}">
+            <h3>竞品量价模型</h3>
+            <p>竞品量价模型可以通过设置商品和竞品的对照关系，对竞品的价格进行监控。监控商品降价时，竞品有没有跟价，销量是否有变化。</p>
+          </div>
+      </fj-Col>
+    </fj-Row>
+    <div class="{styles.pageCnt}">
+      <div class="{styles.pageTitle}">
+        <b>重点关注商品</b>
+        <SetRelation />
+      </div>
+      <fj-row gutter={40} clearfix>
+        <fj-col l=5>
+          <FocusOnCommodities />
+        </fj-col>
+        <fj-col l=7>
+          <PromotionInfo />
+          <TrendAnalysis />
+        </fj-col>
+      </fj-row>
+    </div>
+  </div>
+</template>
+
+<template name="setRelation">
+  <span class="fr" onClick={onSetRelation}>
+    设置商品对照关系
+    <ant-Icon type="right-circle-o" />
+    <ant-Modal
+      width={960}
+      visible={modalVisible}
+      footer={null}
+      onCancel={onModalCancel}>
+      <@title>
+        <div class={styles.modalTitle}>竞品对照关系</div>
+      </@title>
+      <div class={styles.setRelation}>
+        <h3>对照关系表</h3>
+        <ant-Table dataSource="{tableData}"
+                   pagination={false}
+                   {scroll}
+                   bordered>
+          <ant-TableColumn
+            title="自营商品编码"
+            dataIndex="sku"
+            key="sku"
+            width={100}
+            render="{renderGroupRow('sku')}" />
+          <ant-TableColumn
+            title="自营商品名称"
+            dataIndex="wareName"
+            key="wareName"
+            width={200}
+            render="{renderGroupRow('wareName')}" />
+          <ant-TableColumn
+            title="操作"
+            dataIndex="sku"
+            key="operation"
+            width={100}
+            render="{renderGroupRow('operation')}" />
+          <ant-TableColumn
+            title="竞争商品编码"
+            dataIndex="competeSku"
+            key="competeSku"
+            width={100} />
+          <ant-TableColumn
+            title="竞争商品名称"
+            dataIndex="competeWareName"
+            key="competeWareName" />
+          <ant-TableColumn
+            title="来源"
+            dataIndex="sourceName"
+            key="sourceName"
+            width={60} />
+          <ant-TableColumn
+            title="操作"
+            dataIndex="competeSku"
+            key="competeOperation"
+            width={60}>
+            <@render>
+              <#fn text record index>
+                <a onClick="{onCompeteDelete(text, record, index)}">删除</a>
+              </#fn>
+            </@render>
+          </ant-TableColumn>
+        </ant-Table>
+        <h3>添加自营商品</h3>
+        <section>
+          编码：<ant-Input placeholder="请输入自营商品编码" value={skuInput} onChange={onSkuChange} /><ant-Icon type="search" onClick="{onQuerySku}" />
+          名称：<ant-Input readOnly value={competitivePriceModel.wareName} />
+        </section>
+        <h3>添加竞争商品</h3>
+        <section>
+          编码：<ant-Input placeholder="请输入竞争商品编码" value={skuCompeteInput} onChange={onCompeteSkuChange} /><ant-Icon type="search" onClick="{onQueryCompeteSku}" />
+          名称：<ant-Input readOnly value="{competitivePriceModel.('competeWareInfo').('wareName')}" />
+          <p>
+            <ant-Button type="primary" onClick={onAddCompeteSku}>添加</ant-Button>
+          </p>
+        </section>
+        <h3>友商匹配商品列表</h3>
+        <ant-Table dataSource="{competitivePriceModel.('competeWareInfo').('matchList') | toJS}"
+                   pagination={false}
+                   scroll={friendsScroll}
+                   bordered>
+          <ant-TableColumn
+            title="来源"
+            dataIndex="sourceName"
+            key="sourceName"
+            width={60} />
+          <ant-TableColumn
+            title="商品编码"
+            dataIndex="sku"
+            key="sku"
+            width={100} />
+          <ant-TableColumn
+            title="商品名称"
+            dataIndex="wareName"
+            key="wareName" />
+          <ant-TableColumn
+            title="操作"
+            dataIndex="sku"
+            key="operation"
+            width={60}>
+            <@render>
+              <#fn text record index>
+                <a onClick="{onAddFriendsSku(text, record, index)}">添加</a>
+              </#fn>
+            </@render>
+          </ant-TableColumn>
+        </ant-Table>
+      </div>
+    </ant-Modal>
+  </span>
+</template>
+
+<template name="focusOnCommodities">
+  <div class="{styles.focusOnCommodities}">
+    <#if {competitivePriceModel.('contrastRelationData').('length')}>
+      <#each {competitivePriceModel.contrastRelationData}>
+        <fj-row class="{styles.skuItem}">
+          <fj-rowleft width={30} onClick="{onItemExpand(this)}">
+            <ant-Icon type="{expanded ? ('minus', 'plus')}" />
+          </fj-rowleft>
+          <fj-row left={50} right={120}>
+            <span title="（{sku}）{wareName}">{wareName}</span>
+          </fj-row>
+          <fj-rowright width={100}>
+            <span onClick={onDelete(this)}>
+              <ant-Icon type="delete" /><span>删除</span>
+            </span>
+          </fj-rowright>
+        </fj-row>
+        <#if {expanded}>
+          <ant-Table class="{styles.competeList}"
+                     dataSource="{competeList | toJS}"
+                     pagination={false}
+                     rowSelection="{obj(
+                       'selectedRowKeys' : (competeSelectedKeys | toJS),
+                       'onChange' : (onSelectChange(this))
+                     )}">
+            <@rowKey>
+              <#fn record>{record.sku + '_' + record.sourceId}</#fn>
+            </@rowKey>
+            <ant-TableColumn
+              title="编号"
+              dataIndex="no"
+              key="no"
+              width={50}>
+              <@render>
+                <#fn text record index>{index + 1}</#fn>
+              </@render>
+            </ant-TableColumn>
+            <ant-TableColumn
+              title="SKU编码"
+              dataIndex="sku"
+              key="sku"
+              width={70}
+            />
+            <ant-TableColumn
+              title="商品名称"
+              dataIndex="wareName"
+              key="wareName">
+              <@render>
+                <#fn text record index>
+                  <div title={text}>{text | clipText(10)}</div>
+                </#fn>
+              </@render>
+            </ant-TableColumn>
+            <ant-TableColumn
+              title="来源"
+              dataIndex="sourceName"
+              key="sourceName"
+              width={50}
+            />
+            <ant-TableColumn
+              title="操作"
+              dataIndex="sku"
+              key="operation"
+              width={50}>
+              <@render>
+                <#fn text record index>
+                  <a onClick="{onCompeteDelete(text, record, index)}">删除</a>
+                </#fn>
+              </@render>
+            </ant-TableColumn>
+          </ant-Table>
+        </#if>
+      </#each>
+      <#else>
+        <div class={styles.empty}>请先建立竞品对照关系表，才能查看相关数据</div>
+      </#else>
+    </#if>
+  </div>
+</template>
+
+<template name="promotionInfo">
+  <fj-row class="{styles.promotionInfo}" gutter={20} clearfix>
+    <fj-col l=6 class={styles.promotionPanel}>
+      <fj-row>
+        <fj-rowleft width={10} />
+        <fj-row left={10} right={10}>
+          <div class={styles.promotionTitle}>
+            商品促销<span>{competitivePriceModel.selectedDate}</span>
+          </div>
+          <div class={styles.promotionBody}>
+            <#each {competitivePriceModel.('promotionData').('promotion')}>
+              <fj-row key={@index}>
+                <fj-rowleft width={50}>{name}</fj-rowleft>
+                <fj-row left={60} class={styles.promotionDetail}>
+                  <pre>{content != null ? (content, '')}</pre>
+                </fj-row>
+              </fj-row>
+            </#each>
+          </div>
+        </fj-row>
+        <fj-rowright width={10} />
+      </fj-row>
+    </fj-col>
+    <fj-col l=6 class={styles.promotionPanel}>
+      <fj-row>
+        <fj-rowleft width={10} />
+        <fj-row left={10} right={10}>
+          <div class={styles.promotionTitle}>
+            竞品促销<span>{competitivePriceModel.selectedDate}</span>
+          </div>
+          <div class={styles.promotionBody}>
+            <#each {competitivePriceModel.('promotionData').('competePromotion')}>
+              <fj-row key={@index}>
+                <fj-rowleft width={50}>{name}</fj-rowleft>
+                <fj-row left={60} class={styles.promotionDetail}>
+                  <div><@dangerouslySetInnerHTML>
+                         <#obj>
+                           <@__html>
+                             {content != null ? (content, '')}
+                           </@__html>
+                         </#obj>
+                       </@dangerouslySetInnerHTML></div>
+                </fj-row>
+              </fj-row>
+            </#each>
+          </div>
+          <!-- <div class="{styles.promotionBody2} {styles.promotionDetail}">
+            <pre>{competitivePriceModel.('promotionData').('competePromotion')}</pre>
+          </div> -->
+        </fj-row>
+        <fj-rowright width={10} />
+      </fj-row>
+    </fj-col>
+  </fj-row>
+</template>
+
+<template name="trendAnalysis">
+  <div class="{styles.trendAnalysis}">
+    <ec-LineChart ref="chart" {option} {data} height="80%" />
+  </div>
+</template>

@@ -1,0 +1,78 @@
+.priceAnalysis {
+    padding-top:80px;
+   .pageCnt{ margin:20px; padding:20px; background: #fff;
+     .pageTitle{
+       font-size: 18px;font-weight: normal;position:relative;line-height:100%;padding:0 0 20px 10px;
+       &:before{content:'';position: absolute;left:0;height:16px;width:3px;background: #e13a25;}
+     }
+   }
+   .pageTitleBox {
+     h2 {display: inline-block;margin-right: 20px;}
+     span {
+       color: #999;
+     }
+   }
+
+   .summary {
+      box-shadow:-5px 5px 5px #eee;
+      margin-bottom: 40px;
+      .imgBox {
+        min-height:100px;
+        text-align: center;
+        padding-top: 10px;
+        display: block;
+      }
+   }
+
+   .txtarea {
+     padding:0 0 20px 30px;
+      h3 {color: #333;font-size: 18px;margin-bottom:10px;}
+      color: #999;
+   }
+
+   .products {
+      border-bottom:1px solid #ebebeb;
+      margin-bottom: 40px;
+      .yAxis {
+         position: absolute;
+         width: 20px;
+         z-index: 10;
+         margin: 100px 0 50px 60px;
+         color: #999;
+      }
+      .sup {position: absolute; margin: -62px 0 0 35px;}
+      .txt {font-size:16px;}
+      .sub {position: absolute;margin: 120px 0 0 17px;}
+   }
+
+   .detail {
+      .title { margin-bottom: 10px;}
+      a.btnDown { cursor: pointer;width:24px; height: 24px;display: block;float:right;position: relative;z-index:5;
+         i {font-size: 24px;color: #656684;}
+      }
+      a.btnDown:hover {
+        i {color:#108ee9;}
+      }
+      .tableDetail {
+         width: 100%; margin-bottom: 20px;
+         tr td { border:2px solid #fff; line-height:44px; text-align: center; background-color: #f5f6f7;}
+         tbody tr td:first-child { background-color: #92dbdf; color: #fff;}
+         tbody tr td.rank { background-color: #48acb5;}
+         thead tr td {
+            background-color: #656684;color: #fff;
+         }
+
+      }
+      .paginationWrap {text-align: center; margin-bottom: 20px;}
+   }
+   .errorTip {
+      min-height: 300px;
+      text-align: center;
+      .txt {
+         display: block;
+         line-height:260px;
+         font-size: 18px;
+         color: #999;
+      }
+   }
+}

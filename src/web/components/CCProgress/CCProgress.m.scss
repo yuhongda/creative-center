@@ -1,0 +1,68 @@
+﻿:global{
+.ccProgress {
+  padding: 40px 60px 40px 40px;
+  overflow: hidden;
+  .ccProgressInner {
+    position: relative;
+    background: #dfdfdf;
+    height: 8px;
+    border-radius: 8px;
+    .currentProgress {
+      background: #00a497;
+      height: 8px;
+      border-radius: 8px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      z-index: 1;
+      transition: all 1s ease-in-out;
+      &:after {
+        content: '';
+        width: 2px;
+        height: 20px;
+        background: #00a497;
+        position: absolute;
+        top: -6px;
+        right: 0;
+      }
+      > span {
+        position: absolute;
+        text-align: center;
+        bottom: -20px;
+        line-height: 100%;
+        width: 200px;
+        right: -100px;
+        font-size: 12px;
+        color: #909090;
+        font-weight: bold;
+      }
+    }
+    .targetProgress {
+      width: 2px;
+      height: 20px;
+      background: #ec6d71;
+      position: absolute;
+      top: -6px;
+      left: 0;
+      z-index: 2;
+      // transition: all 1s ease-in-out;
+      > span {
+        position: absolute;
+        text-align: center;
+        top: -15px;
+        line-height: 100%;
+        width: 200px;
+        left: -100px;
+        font-size: 12px;
+        color: #909090;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.text {
+  color: #bbbec5;
+}
+}

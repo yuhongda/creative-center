@@ -1,0 +1,121 @@
+@import "../../css/common.scss";
+
+.stockWarning {
+  padding-top:80px;
+  .searchWrap {
+     padding-left: 30px;background-color: #fff;
+  }
+  .pageCnt{ margin:20px; background: #fff;
+     .pageTitle{
+       font-size: 18px;font-weight: normal;position:relative;line-height:100%;
+       padding:20px 0 20px 10px; margin:0 20px;
+       &:before{content:'';position: absolute;left:0;height:16px;width:3px;background: #e13a25;}
+     }
+   }
+   .ecWrap {
+
+   }
+   .summary{ padding-bottom: 20px;
+      .summaryItem{
+        border:1px solid #eee;border-radius: 5px;width:90%;margin:0 auto;padding:20px;
+        .field{
+          color:#999;@include ellipsis;
+          i{margin-left:5px;}
+         }
+        .num{
+          font-size: 20px;text-align: center;padding: 20px 0;@include ellipsis;
+          em {font-size: 24px;}
+        }
+        .rates{font-size: 14px; text-align: right;}
+        .red{color:#e13a25;}
+        .green{color:#25e17d;}
+      }
+      .summaryItem:hover {
+           border:1px solid #ff3e00;
+           box-shadow: 0 0 4px 1px #ffd0c1;
+      }
+      .hideItem {display: none;}
+      .showItem {display: block;}
+    }
+
+    .stockWarningGroupWrap {
+      .tabCnt{
+        margin:10px 20px 20px 20px;
+        padding:20px 20px 100px;
+        .blockWrapRight {
+          min-height:460px;
+          padding-left: 20px;
+          .blockTit{font-size: 16px;margin-bottom: 20px;overflow:hidden;zoom:1;}
+        }
+        .tabox {
+           border:1px solid #ececec; padding:20px; border-radius: 5px;
+           box-shadow: 0 0 2px 1px #f4edea;
+        }
+      }
+      .radioBox {text-align:center;margin-bottom: 15px;}
+    }
+    a.btnCause {
+       border:1px solid #666;
+       border-radius: 30px;
+       padding: 5px 20px;
+       display: inline-block;
+       float:right;
+       font-size: 14px;
+       color:#666;
+       margin-right: 25px;
+       text-decoration: none;
+    }
+    a.btnCause:hover {
+      border-color: #108ee9;
+      color:#108ee9;
+    }
+    .tableWrap {
+       table {width: 100%; border:1px solid #cfcfcf; text-align: center;}
+       table tr td {padding:0 5px;}
+       thead tr th {background-color:#F6F7F9;text-align: center;}
+       tbody tr td {border-bottom:1px solid #cfcfcf;padding:10px 5px;}
+       tbody tr td:nth-child(2) {text-align: left;}
+       tbody tr:hover {background-color:#F6F7F9;}
+       thead span {display: block;text-align: center;}
+    }
+    a.btnDown { cursor: pointer;width:24px; height: 24px;display: block;float:right;position: relative;z-index:5;
+       i {font-size: 24px;color: #656684;}
+    }
+    a.btnDown:hover {
+      i {color:#108ee9;}
+    }
+    .summaryTitle {
+      .popMenu {
+       float: right;
+       margin:20px 20px 0 0;
+       position: relative;
+       z-index: 10;
+       :global{
+         .anticon-setting {
+           font-size:20px;
+         }
+       }
+      }
+    }
+}
+
+:global {
+  @include antTab;
+}
+
+.tooltipClass{
+  dt{
+    height:30px;
+    line-height: 20px;
+    font-size: 14px;
+  }
+  :global{
+    .ant-checkbox-group-item{
+      width: 130px;
+      margin-bottom: 5px;
+    }
+    .ant-tooltip-inner{
+      max-width: 150px;
+    }
+  }
+}

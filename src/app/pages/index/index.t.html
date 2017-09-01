@@ -1,0 +1,22 @@
+<template name="Index">
+    <div class="{styles.indexWrap}">
+        <div class="{styles.logo}"></div>
+        <div class="{styles.btnArea}">
+            <form action="/home/mobileLogin" method="POST" ref="formLogin">
+                <antm-InputItem
+                        id="verifyCode"
+                        name="verifyCode"
+                        class="{styles.iptCode}"
+                        placeholder="请输入验证码"
+                        value={code}
+                        onChange={onCodeChange}
+                ></antm-InputItem>
+            </form>
+            <antm-WhiteSpace size="lg" />
+            <antm-Button
+                    class="{styles.btnLogin}"
+                    onClick={login}
+            >登录</antm-Button>
+        </div>
+    </div>
+</template>

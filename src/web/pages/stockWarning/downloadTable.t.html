@@ -1,0 +1,14 @@
+<template name="downloadForm">
+<form action={formAction} target="ifrExport" method="post" ref="formExport">
+    <a href="javascript:;" class="{styles.btnDown}" onClick={onDownload}><ant-Icon type="download" /></a>
+    <input type="hidden" name="deptId" value="{tableParams.('deptId') ||('')}">
+    <input type="hidden" name="categoryId1" value="{tableParams.('categoryId1') ||('')}">
+    <input type="hidden" name="categoryId2" value="{tableParams.('categoryId2') ||('')}">
+    <input type="hidden" name="categoryId3" value="{tableParams.('categoryId3') ||('')}">
+    <input type="hidden" name="brandId" value="{tableParams.('brandId') ||('')}">
+    <input type="hidden" name="date" value="{tableParams.('date') ||('')}">
+    <input type="hidden" name="dataRange" value="{tableParams.('dataRange') ||('')}">
+    <input type="hidden" name="isAll" value="1">
+    <iframe style="display:none" id="ifrExport" name="ifrExport" src="about:blank"></iframe>
+</form>
+</template>

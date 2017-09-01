@@ -1,0 +1,207 @@
+.subdivisionMarket {
+  padding-top: 80px;
+
+  .pageCnt {
+    margin: 20px;
+    padding: 20px;
+    background: #fff;
+
+    .pageTitle {
+      font-size: 18px;
+      font-weight: normal;
+      position: relative;
+      line-height: 100%;
+      padding: 0 0 20px 10px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        height: 16px;
+        width: 3px;
+        background: #e13a25;
+      }
+    }
+  }
+
+  .analyse {
+    margin-bottom: 40px;
+
+    .title {
+      text-align: left;
+      background-color: #fafafa;
+      padding: 0 15px;
+      line-height: 40px;
+      font-size: 16px;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 20px;
+    }
+
+    .ecWrap {
+      padding: 0 20px 10px 0;
+    }
+
+    .radioBox {
+      text-align: center;
+      padding-bottom: 30px;
+    }
+
+    .mod {
+      padding:0 15px;
+      // border-radius: 5px;
+      // box-shadow: 0 0 2px 2px #eee;
+      // position: relative;
+    }
+
+    .fr {
+      float: right;
+    }
+    .iconArraw {
+      right:-55px;
+      top:50%;
+      margin-top: -40px;
+      position: absolute;
+      width: 30px;
+      height: 85px;
+      background: url(../../images/icon-arrow-big.png) center no-repeat;
+    }
+  }
+
+  .competition {
+    .tableWrap {
+      padding: 0 20px;
+
+      table tr td {
+        text-align: center;
+      }
+
+      tbody tr td {
+        padding: 10px 5px;
+      }
+
+      thead tr th {
+        text-align: center;
+      }
+
+      :global {
+        .ant-table-pagination {
+           // display:none;
+         }
+        .ant-table-thead > tr > th{
+          background: #fff;
+          border-bottom: 1px solid #999;
+        }
+        .ant-table-tbody > tr > td{
+          .rank {width:25px;height:25px;display: inline-block;font-size: 14px;line-height: 25px;text-align: center;color: #fff;border-radius: 50%;}
+          .rank-0{background: #cf2529;}
+          .rank-1{background: #435e7a;}
+          .rank-2{background: #59a1a9;}
+          .rank-3{background: #cca05d;}
+          .indent-level-0{display: none;}
+        }
+        .ant-table-tbody > tr > td.blue{color:#54728C;}
+
+      }
+    }
+
+    .top30 {
+      height: 520px;
+      tbody tr td:nth-child(2) {text-align: left;}
+    }
+
+    .title {
+       padding: 5px 10px;line-height: 32px;
+    }
+    .title:after{
+      content:'';
+      clear:both;
+      display: table;
+    }
+    .iconTop {
+       background: url(../../images/icon-top.png);
+       width:32px;
+       height: 32px;
+       display:block;
+       float: left;
+       margin-right: 10px;
+    }
+  }
+
+  .userTitle {
+    text-align: left;
+
+    h2 {
+      float: left;
+      margin: 5px 50px 0 0;
+    }
+  }
+
+  .userTitle:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  .popMenu {
+    float: right;
+    margin-top:10px;
+    :global{
+      .anticon-setting {
+        font-size:20px;
+      }
+    }
+
+  }
+
+  .tagsBox {
+    float:left;
+    span {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #e13a25;
+      color: #fff;
+      margin-right: 2px;
+      cursor: pointer;
+    }
+
+    span:first-child {
+      background-color: #e13a25;
+    }
+
+    span:nth-child(2) {
+      background-color: #47ACB5;
+    }
+
+    span:nth-child(3) {
+      background-color: #20223D;
+    }
+
+    span:nth-child(4) {
+      background-color: #FFC221;
+    }
+
+    span:nth-child(5) {
+      background-color: #FE4459;
+    }
+
+    span:nth-child(6) {
+      background-color: #2C92FF;
+    }
+  }
+}
+.tooltipClass{
+  dt{
+    height:30px;
+    line-height: 20px;
+    font-size: 14px;
+  }
+  :global{
+    .ant-checkbox-group-item{
+      width: 80px;
+      margin-bottom: 5px;
+    }
+    .ant-tooltip-inner{
+      max-width: 126px;
+    }
+  }
+}

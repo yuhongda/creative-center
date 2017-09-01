@@ -1,0 +1,152 @@
+<template name="BusinessDashboard">
+    <antm-WingBlank size="sm">
+        <antm-WhiteSpace size="sm" />
+        <antm-Tabs swipeable={false}>
+            <antm-TabsPane tab="年度" key="1">
+                <KPIDashboard data={dataYear} pm1={true} pm2={true} />
+            </antm-TabsPane>
+            <antm-TabsPane tab="季度" key="2">
+                <KPIDashboard data={dataSeason} pm1={true} pm2={true} />
+            </antm-TabsPane>
+            <antm-TabsPane tab="月度" key="3">
+                <KPIDashboard data={dataMonth} pm1={true} pm2={true} pm4={true} />
+            </antm-TabsPane>
+        </antm-Tabs>
+        <antm-WhiteSpace size="sm" />
+        <KPIDashboardDay data={dataDay} />
+        <antm-WhiteSpace size="sm" />
+        <CategoryAndBrandDashboard />
+    </antm-WingBlank>
+</template>
+
+<!--年季月 begin-->
+<template name="KPIDashboard">
+    <div>
+        <antm-Card full>
+            <antm-CardHeader title={data.name} />
+            <antm-CardBody>
+                <KPIDashboardPane {...props}/>
+            </antm-CardBody>
+        </antm-Card>
+    </div>
+</template>
+
+<template name="KPIDashboardPane">
+    <div>
+        <div class={styles.progressWrap}>
+            <cc-progress target={data.targetValue} current={data.salesVolumeValue} />
+        </div>
+        <antm-WhiteSpace size="lg" />
+        <antm-Flex>
+            <antm-FlexItem>
+                <KPIDashboardPaneItem pName={data.targetName} pValue={data.targetValue} emphasis={data.targetEmphasis} pm={pm1} />
+            </antm-FlexItem>
+            <antm-FlexItem>
+                <KPIDashboardPaneItem pName={data.salesVolumeName} pValue={data.salesVolumeValue} emphasis={data.salesVolumeEmphasis} pm={pm2} />
+            </antm-FlexItem>
+        </antm-Flex>
+        <antm-WhiteSpace size="sm" />
+        <antm-Flex>
+            <antm-FlexItem>
+                <KPIDashboardPaneItem pName={data.completionRateName} pValue={data.completionRateValue} emphasis={data.completionRateEmphasis} pm={pm3} />
+            </antm-FlexItem>
+            <antm-FlexItem>
+                <KPIDashboardPaneItem pName={data.forecastRateName} pValue={data.forecastRateValue} emphasis={data.forecastRateEmphasis} pm={pm4} />
+            </antm-FlexItem>
+        </antm-Flex>
+    </div>
+</template>
+<!--年季月 end-->
+
+<!--日度 begin-->
+<template name="KPIDashboardDay">
+    <antm-Card>
+        <antm-CardHeader title={data.name} />
+        <antm-CardBody>
+            <ec-HeatMapChart ref="calendar" option={optionCalendar} />
+            <antm-WhiteSpace size="lg" />
+            <div class="tc">时间：{data.day}</div>
+            <KPIDashboardPane data={data} pm1={true} pm2={true} pm4={true} />
+            <div class="tc">销售趋势</div>
+            <ec-BarChart ref="trend" option={optionTrend} />
+        </antm-CardBody>
+    </antm-Card>
+</template>
+<!--日度 end-->
+
+<!--数据项 begin-->
+<template name="KPIDashboardPaneItem">
+        <#if {emphasis}>
+            <div>
+                <div class="{styles.pName} {styles.emphasis}">{pName}</div>
+                <div class="{styles.pValue} {styles.emphasis}">
+                    <#if {pm}>
+                        {pValue | parseMillion}
+                        <#else>
+                            {pValue}
+                        </#else>
+                    </#if>
+                </div>
+            </div>
+            <#else>
+                <div>
+                    <div class="{styles.pName}">{pName}</div>
+                    <div class="{styles.pValue}">
+                        <#if {pm}>
+                            {pValue | parseMillion}
+                            <#else>
+                                {pValue}
+                            </#else>
+                        </#if>
+                    </div>
+                </div>
+            </#else>
+        </#if>
+</template>
+<!--数据项 end-->
+
+<!--品类/品牌 begin-->
+<template name="CategoryAndBrandDashboard">
+    <antm-Card>
+        <antm-CardHeader title={categoryAndBrandTitle} />
+        <antm-CardBody>
+            <!--
+            <antm-SegmentedControl
+                    values={dataType}
+                    onChange={onDataTypeChange}
+                    selectedIndex={dataTypeSelectedIndex}
+                    disabled={controlDisabled}
+            />
+            -->
+            <antm-SegmentedControl
+                    values={dateType}
+                    onChange={onDateTypeChange}
+                    selectedIndex={dateTypeSelectedIndex}
+                    disabled={controlDisabled}
+            />
+            <antm-WhiteSpace size="lg" />
+            <!--
+            <CategoryAndBrandDashboardList dataList={dataList} />
+            -->
+            <antm-Button onClick={onCategoryBtnClick} disabled={controlDisabled}>品类KPI追踪</antm-Button>
+            <antm-WhiteSpace size="sm" />
+            <antm-Button onClick={onBrandBtnClick} disabled={controlDisabled}>品牌KPI追踪</antm-Button>
+        </antm-CardBody>
+    </antm-Card>
+</template>
+<!--品类/品牌 end-->
+
+<!--品类/品牌列表 begin-->
+<!--
+<template name="CategoryAndBrandDashboardList">
+    <div class="{styles.progressList}">
+        <#each {dataList}>
+            <div class="{styles.progressListItem}" key="CategoryAndBrandDashboardList-{@index}">
+                <div>{name}</div>
+                <div><cc-progress target={kpiTrack.target} current={kpiTrack.current} /></div>
+            </div>
+        </#each>
+    </div>
+</template>
+-->
+<!--品类/品牌列表 end-->

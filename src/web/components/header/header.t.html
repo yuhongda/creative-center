@@ -1,0 +1,21 @@
+<header class="site-header{store.sider.isOpen ? (' isMenuOpen', '')}">
+  <ul class="site-nav">
+    <#each {store.sider.splitAccountMenus.('others')}>
+      <li key={index} class="{store.header.current == index ? ('cur', '')}" onClick={navChanged} data-index="{index}">{menu.name}</li>
+    </#each>
+    <!-- <li class="{store.header.current == 2 ? ('cur', '')}" onClick={navChanged} data-index={2}>专题分析</li> -->
+    <!-- <cc-FormattedMessage 
+      id='key1'
+      description='say hello.'
+    /> -->
+  </ul>
+  <div class="login-wrap middle">
+    <#with {store.sider.splitAccountMenus.('account')} as="account">
+      <#if {account}>
+        <span><a class="link {store.header.current == account.index ? ('cur', '')}" onClick={navChanged} data-index={account.index}>账号管理</a>|</span>
+      </#if>
+    </#with>
+    <a class="link">201704ZMD411</a>
+    <a class="avatar"><img src="{headerPic}" alt=""></a>
+  </div>
+</header>

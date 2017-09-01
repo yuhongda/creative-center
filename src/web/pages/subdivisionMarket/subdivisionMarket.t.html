@@ -1,0 +1,122 @@
+<template name="subdivisionMarket">
+  <div class="{styles.subdivisionMarket}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategoryHasLevel4 showProp showDate  defaultValueType=4/>
+    <div class="{styles.pageCnt}">
+      <h2 class="{styles.pageTitle}">细分市场生意评估</h2>
+      <marketAnalyse />
+      <h2 class="{styles.pageTitle}">细分市场竞争评估</h2>
+      <marketCompetition />
+      <marketUserFeature />
+    </div>
+
+  </div>
+</template>
+
+<!-- 01 细分市场生意评估 -->
+<template name="marketAnalyse">
+  <div class="{styles.analyse}">
+    <fj-Row class="clearfix">
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}">销售趋势图</div>
+          <div class="{styles.ecWrap}">
+             <ec-BarChart ref="ecBarSale" option={saleOption} data={saleData} height={350} />
+          </div>
+          <div class="{styles.radioBox}">
+            <ant-RadioGroup defaultValue="a" size="default" onChange={onSalesTypeChange}>
+              <ant-RadioButton value="a">销量</ant-RadioButton>
+              <ant-RadioButton value="b">销售额</ant-RadioButton>
+            </ant-RadioGroup>
+          </div>
+        </div>
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}">增长率趋势图</div>
+          <div class="{styles.ecWrap}">
+             <ec-BarChart ref="ecBarGrowth" option={growthOption} data={growthData} height={350} />
+          </div>
+          <div class="{styles.radioBox}">
+            <ant-RadioGroup defaultValue="a" size="default" onChange={onGrowthTypeChange}>
+              <ant-RadioButton value="a">UV增长率</ant-RadioButton>
+              <ant-RadioButton value="b">UV转化率</ant-RadioButton>
+              <ant-RadioButton value="c">用户同比增长率</ant-RadioButton>
+              <ant-RadioButton value="d">客单价</ant-RadioButton>
+            </ant-RadioGroup>
+          </div>
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>
+
+<!-- 02 细分市场竞争评估 -->
+<template name="marketCompetition">
+  <div class="{styles.analyse} {styles.competition}">
+    <fj-Row class="clearfix">
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}"><span class="{styles.iconTop}"></span>TOP10品牌销售额排名</div>
+          <div class="{styles.tableWrap} {styles.top10}">
+              <ant-Table columns={topTenColumns} pagination={false} dataSource={topTenData} />
+          </div>
+        </div>
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}"><span class="{styles.iconTop}"></span>TOP30商品销售额排名</div>
+          <div class="{styles.tableWrap} {styles.top30}">
+              <ant-Table columns={topThirtyColumns} pagination={false} dataSource={topThirtyData} scroll={topThirtyScrollNum} />
+          </div>
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>
+
+<!-- 03 细分市场用户特征 -->
+<template name="marketUserFeature">
+  <div class="{styles.analyse} {styles.user}">
+    <div class="{styles.userTitle}">
+      <div class="{styles.popMenu}">
+        <!-- 暂无用 -->
+        <!-- <ant-Tooltip placement="topRight" overlayClassName="{styles.tooltipClass}">
+          <@title>
+            <dl>
+              <dt>选择需要的属性</dt>
+              <dd>
+                <ant-CheckboxGroup {value} {options} {onChange} />
+              </dd>
+            </dl>
+          </@title>
+          <ant-Icon type="setting" />
+        </ant-Tooltip> -->
+       </div>
+       <h2 class="{styles.pageTitle}">细分市场用户特征</h2>
+       <div class="{styles.tagsBox}">
+         <#each {tags}>
+            <span onClick={onTags(this)} key={@index}>{this}</span>
+         </#each>
+       </div>
+    </div>
+    <fj-Row class="clearfix">
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}">细分市场{subdivisionMarket.currentTag}</div>
+          <div class="{styles.ecWrap}">
+              <ec-BarChart ref="ecMarketUser" option={marketUserOption} data={marketUserData} height={430} />
+          </div>
+        </div>
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="{styles.mod}">
+          <div class="{styles.title}">品类{subdivisionMarket.currentTag}</div>
+          <div class="{styles.ecWrap}">
+              <ec-BarChart ref="ecMarketCategory" option={marketCategoryOption} data={marketCategoryData} height={430} />
+          </div>
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>

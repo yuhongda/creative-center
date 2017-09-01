@@ -1,0 +1,270 @@
+﻿@import "../../css/common.scss";
+.competitivePriceModel {
+  padding-top: 80px;
+}
+
+.summary {
+  box-shadow: -5px 5px 5px #eee;
+  background-color: #fff;
+  padding-top: 30px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+}
+
+.imgBox {
+  min-height: 100px;
+  text-align: center;
+  display: block;
+}
+
+.txtarea {
+  padding: 0 0 20px 30px;
+  h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  color: #999;
+}
+
+.pageCnt {
+  margin: 20px;
+  background: #fff;
+  padding-bottom: 20px;
+}
+
+.pageTitle {
+  height: 150px;
+  line-height: 150px;
+  background-image: url(../../images/icon-price-star.png);
+  background-repeat: no-repeat;
+  background-position: 50px 40px;
+  padding-left: 170px;
+  padding-right: 30px;
+  b {
+    font-size: 1.5rem;
+  }
+   :global {
+    span.fr {
+      color: #888888;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .anticon {
+      margin-left: 20px;
+      font-size: 1.8rem;
+      font-weight: normal;
+      vertical-align: middle;
+    }
+  }
+}
+
+.focusOnCommodities {
+  padding-left: 60px;
+}
+
+.skuItem {
+  height: 100px;
+  width: 85%;
+  border-radius: 5px;
+  background-color: #387c9e;
+  background-image: url(../../images/icon-price-circle.png);
+  background-repeat: no-repeat;
+  background-position: 50px -14px;
+  margin-bottom: 30px;
+  >div {
+    height: 100px;
+    line-height: 100px;
+    color: #fff;
+    &:nth-of-type(1) {
+      background-color: #2d637e;
+      text-align: center;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      cursor: pointer;
+       :global {
+        .anticon {
+          font-size: 1rem;
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      @include ellipsis;
+    }
+    &:nth-of-type(3) {
+      background-color: #f1f1f1;
+      text-align: center;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      color: #888;
+      >span {
+        &:hover {
+          color: #fa5757;
+        }
+        >span {
+          cursor: pointer;
+        }
+      }
+       :global {
+        .anticon {
+          font-size: 1rem;
+          margin-right: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.competeList {
+  margin-bottom: 30px;
+  th,
+  td {
+    text-align: center !important;
+  }
+  th {
+     :global {
+      .ant-table-selection {
+        display: none;
+      }
+      .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+         padding:5px 10px;
+      }
+    }
+  }
+  :global {
+   .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+      padding:5px 10px;
+   }
+   .ant-table-thead > tr > th.ant-table-selection-column, .ant-table-tbody > tr > td.ant-table-selection-column {
+      width: auto;
+      min-width: auto;
+      padding: 5px;
+   }
+ }
+}
+
+.promotionInfo {
+  padding-right: 30px;
+}
+
+.promotionPanel {
+  height: 190px;
+  box-sizing: border-box;
+  >div>div {
+    height: 190px;
+    &:nth-of-type(1) {
+      background-image: url(../../images/icon-price-promotion-left.png);
+      background-repeat: no-repeat;
+    }
+    &:nth-of-type(2) {
+      background-image: url(../../images/icon-price-promotion.png);
+    }
+    &:nth-of-type(3) {
+      background-image: url(../../images/icon-price-promotion-right.png);
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+.promotionTitle {
+  color: #fff;
+  height: 60px;
+  line-height: 60px;
+  font-size: 1rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  >span {
+    float: right;
+  }
+}
+
+.promotionBody {
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow-y: auto;
+  height: 122px;
+  >div {
+    >div {
+      min-height: 45px;
+      margin-bottom: 15px;
+      &:nth-of-type(1) {
+        font-size: 1rem;
+        color: #fff;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.promotionBody2 {
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 110px;
+  overflow-y: auto;
+}
+
+.promotionDetail {
+  font-size: 0.75rem;
+  color: #c4592c;
+  background-color: #fee7ce;
+  padding: 5px 10px;
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
+
+.trendAnalysis {
+  height: 800px;
+  padding: 20px 20px 20px 0;
+}
+
+.modalTitle {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  padding-top: 200px;
+  font-size: 20px;
+  color: #999;
+}
+
+.setRelation {
+  padding: 0 10px;
+  h3 {
+    font-weight: normal;
+    height: 40px;
+    line-height: 40px;
+  }
+  th,
+  td {
+    text-align: center !important;
+  }
+  section {
+    padding: 20px 30px;
+    border: 1px solid #e5e5e5;
+    background-color: #fafafa;
+     :global {
+      .ant-input {
+        width: 30%;
+      }
+      .anticon {
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-left: 5px;
+        margin-right: 20px;
+        vertical-align: middle;
+      }
+    }
+    p {
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+  }
+   :global {
+    @include fixAntTableHead;
+  }
+}

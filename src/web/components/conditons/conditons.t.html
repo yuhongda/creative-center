@@ -1,0 +1,125 @@
+<template name="siteConditions">
+  <div class="site-conditions">
+    <fj-Row class="condition-wrap clearfix">
+      <#if {showDept}>
+        <fj-Col l="4">
+          <span class="field">部门</span>
+          <ant-Select style="width:80%" onChange={onDeptChange} value={conditions.selectedDept} placeholder="请选择">
+            <#each {conditions.deptData}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showCategory &&(!(showCategoryHasLevel4))}>
+        <fj-Col l="4">
+          <span class="field">品类</span>
+          <ant-Cascader options={toJS(conditions.categoryData)}
+                        value="{toJS(conditions.selectedCategory)}"
+                        onChange={onCategoryChange}
+                        style="width:80%"
+                        placeholder="请选择"
+                        changeOnSelect
+                        allowClear="{defaultValueType ?(false, true)}">
+          </ant-Cascader>
+        </fj-Col>
+      </#if>
+
+      <#if {showCategoryHasLevel4}>
+        <fj-Col l="4">
+          <span class="field">品类</span>
+          <ant-Cascader options={toJS(conditions.categoryHasLevel4Data)}
+                        value="{toJS(conditions.selectedCategoryHasLevel4)}"
+                        onChange={onCategoryHasLevel4Change}
+                        style="width:80%"
+                        placeholder="请选择"
+                        changeOnSelect
+                        allowClear="{defaultValueType ?(false, true)}">
+          </ant-Cascader>
+        </fj-Col>
+      </#if>
+
+      <#if {showProp}>
+        <fj-Col l="4">
+          <span class="field">属性</span>
+          <ant-Select showSearch filterOption={propFilterOption} style="width:80%" onChange={onPropChange} value="{conditions.selectedProp}" placeholder="请选择">
+            <#each {conditions.propData}>
+              <ant-Option value="{value}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <!--已废弃-->
+      <#if {showCategoryLevel4}>
+        <fj-Col l="4">
+          <span class="field" style="width:24%">四级品类</span>
+          <ant-Select style="width:65%" onChange={onCategoryLevel4Change} value="{conditions.selectedCategoryLevel4 +('')}" placeholder="请选择">
+            <#each {toJS(conditions.categoryLevel4Data)}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showBrand &&(!(showMultiBrand))}>
+        <fj-Col l="4">
+          <span class="field">品牌</span>
+          <ant-Select style="width:80%" onChange={onBrandChange} value="{conditions.selectedBrand +('')}" placeholder="请选择">
+            <#each {conditions.brandData}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showMultiBrand}>
+        <fj-Col l="4">
+          <span class="field">品牌</span>
+          <ant-Select style="width:80%" mode="multiple" onChange={onMultiBrandChange} value="{conditions.selectedMultiBrand | toJS}" placeholder="请选择">
+            <#each {conditions.brandData}>
+              <ant-Option value="{value}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showVendor}>
+        <fj-Col l="4">
+          <span class="field" style="width:15%">供应商</span>
+          <ant-Select style="width:80%" onChange={onVendorChange} value="{conditions.selectedVendor +('')}" placeholder="请选择">
+            <#each {conditions.vendorData}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showSKU}>
+        <fj-Col l="4">
+          <span class="field">SKU</span>
+          <ant-Input placeholder="请输入" style="width:80%" />
+        </fj-Col>
+      </#if>
+
+      <#if {showDate}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <ant-MonthPicker defaultValue="{defaultDate}" onChange={onDateChange} style="width:80%" allowClear={false} />
+      </fj-Col>
+      </#if>
+
+      <#if {showDateRange}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <ant-RangePicker onChange={onDateRangeChange} style="width:80%" />
+      </fj-Col>
+      </#if>
+      <fj-Clearfix />
+      <fj-Col l="12" class="tr btn-search-area" style="margin-top:20px;padding-right:2.5%">
+        <ant-Button {onClick}>{conditionBtnContent}</ant-Button>
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>

@@ -1,0 +1,48 @@
+<template name="accountInfo">
+  <div class="{styles.accountInfo}">
+    <personalInfo />
+    <associatedCategory />
+    <associatedAccount />
+  </div>
+</template>
+
+<template name="personalInfo">
+  <div class="{styles.personalInfo}">
+    <h2>个人信息</h2>
+    <div class="{styles.info}">
+        <ul>
+          <li>
+             <span class="{styles.tl}">品牌商简码：</span>
+             <span class="{styles.tr}">{accountInfo.personalData.('brandCode')}</span>
+          </li>
+          <li>
+             <span class="{styles.tl}">账号角色：</span>
+             <span class="{styles.tr}">{accountInfo.personalData.('role')}</span>
+          </li>
+          <li>
+             <span class="{styles.tl}">品牌商名称：</span>
+             <span class="{styles.tr}">{accountInfo.personalData.('brandName')}</span>
+          </li>
+          <li>
+             <span class="{styles.tl}">联系邮箱：</span>
+             <span class="{styles.tr}">{accountInfo.personalData.('contactEmail')}</span>
+          </li>
+        </ul>
+    </div>
+  </div>
+</template>
+
+<template name="associatedCategory">
+  <div class="{styles.accountMod}">
+    <h2>关联品类品牌</h2>
+    <ant-Table columns={categoryColumns}  dataSource={categoryData} bordered pagination={false} />
+  </div>
+</template>
+<template name="associatedAccount">
+  <div class="{styles.accountMod}">
+    <h2>关联账号</h2>
+    <div class="{styles.tableWrap}">
+       <ant-Table columns={accountColumns} dataSource={accountData} scroll={scrollNum} bordered pagination={false} />
+    </div>
+  </div>
+</template>

@@ -1,0 +1,468 @@
+<template name="businessDashboard">
+  <div class="businessDashboard">
+    <div class="bd-page-tit">
+      <div class="fr">
+        <ant-Button onClick={doTargetSetting}><ant-Icon type="setting" />目标设置</ant-Button>
+        <ant-Button onClick={doDownload}><ant-Icon type="download" />下载数据</ant-Button>
+      </div>
+      <div class="logos middle">
+        <img src={iconJD} alt="">
+        <span>京东</span>
+        <span class="and">&</span>
+        <img src={iconPG} alt="">
+        <span>宝洁</span>
+      </div>
+    </div>
+    <div class="bg-page-cnt">
+
+      
+      <dashboard />
+      <calendar />
+      <category />
+      
+      <ant-Modal
+          title={dlgTargetSettingsTitleCnt}
+          width="960"
+          visible={dlgTargetSettingVisible}
+          onOk={dlgTargetSettingOk}
+          onCancel={dlgTargetSettingCancel}
+          class="dlgTargetSettings"
+          footer={null}
+        >
+          {dlgTargetSettingCnt}
+        </ant-Modal>
+
+        <ant-Modal
+          title="数据下载"
+          width="960"
+          visible={dlgDownloadVisible}
+          onOk={dlgDownloadOk}
+          onCancel={dlgDownloadCancel}
+          footer={null}
+        >
+          {dlgDownloadCnt}
+        </ant-Modal>
+    </div>
+  </div>
+</template>
+
+<template name="dashboard">
+  <!--年季月度KPI追踪：start-->
+  <div class="dashboard">
+    <fj-Row class="clearfix">
+      <fj-Col l="4">
+        <div class="tit {styles.subTitle}">年度KPI追踪（万元）</div>
+        <div class="progress">
+          <cc-progress target={businessDashboard.yearKpiTrack.target} current={businessDashboard.yearKpiTrack.current} />
+        </div>
+        <div class="table">
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">年度目标（万元）</div>
+              <div class="value">{businessDashboard.yearTarget | parseMillion}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">年至今销售额（万元）</div>
+              <div class="value">{businessDashboard.yearSalesVolume | parseMillion}</div>
+            </fj-Col>
+          </fj-Row>
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">年至今完成率</div>
+              <div class="value">{businessDashboard.yearCompletionRate | percent}</div>
+            </fj-Col>
+            <fj-Col l="6" class="red">
+              <div class="field">下月预测完成率</div>
+              <div class="value">{businessDashboard.yearForecastRate | percent}</div>
+            </fj-Col>
+          </fj-Row>
+        </div>
+      </fj-Col>
+      <fj-Col l="4">
+        <div class="tit {styles.subTitle}">季度KPI追踪（万元）</div>
+        <div class="progress">
+          <cc-progress target={businessDashboard.seasonKpiTrack.target} current={businessDashboard.seasonKpiTrack.current} />
+        </div>
+        <div class="table">
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">季度目标（万元）</div>
+              <div class="value">{businessDashboard.seasonTarget | parseMillion}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">季至今销售额（万元）</div>
+              <div class="value">{businessDashboard.seasonSalesVolume | parseMillion}</div>
+            </fj-Col>
+          </fj-Row>
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">季至今完成率</div>
+              <div class="value">{businessDashboard.seasonCompletionRate | percent}</div>
+            </fj-Col>
+            <fj-Col l="6" class="red">
+              <div class="field">下月预测完成率</div>
+              <div class="value">{businessDashboard.seasonForecastRate | percent}</div>
+            </fj-Col>
+          </fj-Row>
+        </div>
+      </fj-Col>
+      <fj-Col l="4">
+        <div class="tit {styles.subTitle}">月度KPI追踪（万元）</div>
+        <div class="progress">
+          <cc-progress target={businessDashboard.monthKpiTrack.target} current={businessDashboard.monthKpiTrack.current} />          
+        </div>
+        <div class="table">
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">月度目标（万元）</div>
+              <div class="value">{businessDashboard.monthTarget | parseMillion}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">月至今销售额（万元）</div>
+              <div class="value">{businessDashboard.monthSalesVolume | parseMillion}</div>
+            </fj-Col>
+          </fj-Row>
+          <fj-Row class="clearfix">
+            <fj-Col l="6">
+              <div class="field">月至今完成率</div>
+              <div class="value">{businessDashboard.monthCompletionRate | percent}</div>
+            </fj-Col>
+            <fj-Col l="6" class="red">
+              <div class="field">下月预测销量（万元）</div>
+              <div class="value">{businessDashboard.monthForecastSales | parseMillion}</div>
+            </fj-Col>
+          </fj-Row>
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+  <!--年季月度KPI追踪：end-->
+</template>
+
+<template name="calendar">
+  <!--日度KPI追踪:start-->
+  <div class="calendar">
+    <div class="tit">
+      <div class="fr">
+        <ant-Button onClick={onBtnClick}><ant-Icon type="area-chart" />查看销售额趋势</ant-Button>
+        <ant-Modal
+          title="销售趋势图"
+          width="960"
+          visible={modalVisible}
+          footer={null}
+          onCancel={onModalCancel}>
+          <ec-BarChart ref="calendar" option={optionSalesTrends} data={dataSalesTrends} height={360} />
+        </ant-Modal>
+      </div>
+      <span class={styles.subTitle}>日度KPI追踪</span>
+    </div>
+    <fj-Row class="calendar-cnt clearfix">
+      <fj-Col l="6">
+        <ec-HeatMapChart ref="calendar" {option} {data} height={360} />
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="table">
+          <div class="date">时间：{businessDashboard.currentDate}</div>
+          <fj-Row class="clearfix" style="margin-top:15px;">
+            <fj-Col l="6">
+              <div class="field">目标（万元）</div>
+              <div class="value">{businessDashboard.calendarTarget | parseMillion}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">实际销售（万元）</div>
+              <div class="value">{businessDashboard.calendarActual | parseMillion}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">完成率</div>
+              <div class="value">{businessDashboard.calendarComplete | percent}</div>
+            </fj-Col>
+            <fj-Col l="6">
+              <div class="field">明日预测销量（万元）</div>
+              <div class="value red">{businessDashboard.calendarSales | parseMillion}</div>
+            </fj-Col>
+          </fj-Row>
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+  <!--日度KPI追踪:end-->
+</template>
+
+<template name="category">
+  <!--品类品牌:start-->
+  <div class="category">
+    <div class="tit clearfix">
+      <div class="fr">
+        <ant-Button onClick="{clickBtn('month')}" class="{dateType == ('month') ? ('selected', '')}"><ant-Icon type="clock-circle-o" />月至今</ant-Button>
+        <ant-Button onClick="{clickBtn('season')}" class="{dateType == ('season') ? ('selected', '')}"><ant-Icon type="clock-circle-o" />季至今</ant-Button>
+        <ant-Button onClick="{clickBtn('year')}" class="{dateType == ('year') ? ('selected', '')}"><ant-Icon type="clock-circle-o" />年至今</ant-Button>
+      </div>
+    </div>
+    <fj-Row class="clearfix">
+      <fj-Col l="4" class={styles.brandPanel}>
+        <div class="progress-tit {styles.subTitle}">品类KPI追踪（万元）</div>
+        <div class={styles.progressPanel}>
+          <#each {dataCategory}>
+            <div class="progress-item" key={name}>
+              <div class="progress-subtit">{name}</div>
+              <div class="progress">
+                <cc-progress target={kpiTrack.target} current={kpiTrack.current} />
+              </div>
+            </div>
+          </#each>
+          <ant-Pagination current={currentCategory} total={businessDashboard.categoryKpiTrackList.length} {pageSize} onChange={onPagingCategory} />
+        </div>
+      </fj-Col>
+      <fj-Col l="4" push={2} class={styles.brandPanel}>
+        <div class="progress-tit {styles.subTitle}">品牌KPI追踪（万元）</div>
+        <div class={styles.progressPanel}>
+          <#each {dataBrand}>
+            <div class="progress-item" key={name}>
+              <div class="progress-subtit">{name}</div>
+              <div class="progress">
+                <cc-progress target={kpiTrack.target} current={kpiTrack.current} />
+              </div>
+            </div>
+          </#each>
+          <ant-Pagination current={currentBrand} total={businessDashboard.brandKpiTrackList.length} {pageSize} onChange={onPagingBrand} />
+        </div>
+      </fj-Col>
+    </fj-Row>
+  </div>
+  <!--品类品牌:end-->
+</template>
+
+
+<!--目标设置弹窗：start-->
+<template name="dlgTargetSettings">
+  <fj-Row class="dlgTargetSettings clearfix" gutter={20}>
+      <fj-Col l="6">
+        <div class="tit">日销售目标</div>
+        <ant-Calendar value={businessDashboard.targetSettingDateValue} dateCellRender={dateCellRender} onPanelChange={panelChange} />
+        <div class="tit clearfix">
+          <div class="fr">
+          </div>
+          <span>
+            <ant-RadioGroup onChange={targetChange} value={businessDashboard.targetType}>
+              <ant-RadioButton value="category">品类目标</ant-RadioButton>
+              <ant-RadioButton value="brand">品牌目标</ant-RadioButton>
+            </ant-RadioGroup>
+          </span>
+          <#if {businessDashboard.targetType ==('category')}>
+            <ant-Select value={businessDashboard.categoryForBrandId} onChange={categoryChange}>
+              <#each {businessDashboard.categoryForBrand}>
+                <ant-Option key={value} value={value}>{label}</ant-Option>
+              </#each>
+            </ant-Select>
+            <#else>
+              <ant-Select value={businessDashboard.brandForTargetId} onChange={brandChange}>
+                <#each {businessDashboard.brandForTarget}>
+                  <ant-Option key={value} value={value}>{label}</ant-Option>
+                </#each>
+              </ant-Select>
+            </#else>
+          </#if>
+        </div>
+        <ant-Calendar mode="year" value={businessDashboard.targetSettingMonthValue} monthCellRender={monthCellRender} onPanelChange={categoryPanelChange} />
+      </fj-Col>
+      <fj-Col l="6">
+        <div class="table-wrap">
+          <div class="table-tit">
+            <span>年销售目标&nbsp;&nbsp;¥{businessDashboard.targetIndex.yearTarget}</span>
+          </div>
+          <div class="table-tit {styles.seasonTarget}">
+            <span>季销售目标</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>一季度</th>
+                <th>二季度</th>
+                <th>三季度</th>
+                <th>四季度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{businessDashboard.targetIndex.seasonTarget1}</td>
+                <td>{businessDashboard.targetIndex.seasonTarget2}</td>
+                <td>{businessDashboard.targetIndex.seasonTarget3}</td>
+                <td>{businessDashboard.targetIndex.seasonTarget4}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-tit table-tit-2">
+            <span>月销售目标</span>
+          </div>
+          <fj-Row class="clearfix">
+            <fj-Col l="3">
+              <div class="field">一月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget1}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">二月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget2}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">三月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget3}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">四月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget4}</div>
+            </fj-Col>
+          </fj-Row>
+          <fj-Row class="clearfix">
+            <fj-Col l="3">
+              <div class="field">五月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget5}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">六月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget6}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">七月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget7}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">八月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget8}</div>
+            </fj-Col>
+          </fj-Row>
+          <fj-Row class="clearfix">
+            <fj-Col l="3">
+              <div class="field">九月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget9}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">十月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget10}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">十一月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget11}</div>
+            </fj-Col>
+            <fj-Col l="3">
+              <div class="field">十二月</div>
+              <div class="value">¥{businessDashboard.targetIndex.monthTarget12}</div>
+            </fj-Col>
+          </fj-Row>
+        </div>
+      </fj-Col>
+    </fj-Row>
+</template>
+
+<template name="dlgTargetSettingsTitle">
+  <div class="fr">
+    <ant-Button class="{styles.modalBtn}" onClick={onSave}><ant-Icon type="save" />保存</ant-Button>
+    <ant-Popover content={popUploadCnt} placement="bottomRight" title="目标数据导入" trigger="click">
+      <ant-Button><ant-Icon type="upload" />导入目标数据</ant-Button>
+    </ant-Popover>
+  </div>
+  <span>目标设置</span>
+</template>
+
+<template name="popUploadCnt">
+  <div>
+    <div>
+      <span>数据文件：</span>
+      <ant-Upload {...uploadProps} accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+        <ant-Button>
+          <ant-Icon type="upload" /> 上传
+        </ant-Button>
+      </ant-Upload>
+    </div>
+    <div class="{styles.uploadBtn}">
+      <a href={downloadUrl} target="_blank">下载模板</a>
+    </div>
+  </div>
+</template>
+<!--目标设置弹窗：end-->
+
+
+<!--数据下载弹窗：start-->
+<template name="dlgDownload">
+  <div class="dlg-download">
+    <form action={formAction} target="ifrExport" method="post" ref="formExport">
+      <#include name="siteConditions" src="../../components/conditons/conditons.t.html" />
+      <input type="hidden" name="categoryId1" value="{categoryId1}">
+      <input type="hidden" name="categoryId2" value="{categoryId2}">
+      <input type="hidden" name="categoryId3" value="{categoryId3}">
+      <input type="hidden" name="brandId" value="{conditions.selectedBrand ?(conditions.selectedBrand, '')}">
+      <input type="hidden" name="vendorId" value="{conditions.selectedVendor ?(conditions.selectedVendor, '')}">
+      <input type="hidden" name="date" value="{conditions.selectedDateRange.length ?(conditions.selectedDateRange.('join')_(','), '')}">
+      <iframe style="display:none" id="ifrExport" name="ifrExport" src="about:blank"></iframe>
+    </form>
+    <div class="tit">数据模版</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>商品编码</th>
+            <th>商品名称</th>
+            <th>一级部门</th>
+            <th>二级部门</th>
+            <th>三级部门</th>
+            <th>供应商简码</th>
+            <th>供应商名称</th>
+            <th>一级品类</th>
+            <th>二级品类</th>
+            <th>三级品类</th>
+            <th>品牌编码</th>
+            <th>品牌名称</th>
+            <th>pv</th>
+            <th>uv</th>
+            <th>有效订单</th>
+            <th>销量</th>
+            <th>销售额</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2017-07-09</td>
+            <td>商品编码</td>
+            <td>商品名称</td>
+            <td>一级部门</td>
+            <td>二级部门</td>
+            <td>三级部门</td>
+            <td>CC23432432</td>
+            <td>供应商名称</td>
+            <td>一级品类</td>
+            <td>二级品类</td>
+            <td>三级品类</td>
+            <td>CC4234234</td>
+            <td>品牌名称</td>
+            <td>123123</td>
+            <td>434324</td>
+            <td>有效订单</td>
+            <td>4324134</td>
+            <td>¥35332324</td>
+          </tr>
+          <tr>
+            <td>2017-07-09</td>
+            <td>商品编码</td>
+            <td>商品名称</td>
+            <td>一级部门</td>
+            <td>二级部门</td>
+            <td>三级部门</td>
+            <td>CC23432432</td>
+            <td>供应商名称</td>
+            <td>一级品类</td>
+            <td>二级品类</td>
+            <td>三级品类</td>
+            <td>CC4234234</td>
+            <td>品牌名称</td>
+            <td>123123</td>
+            <td>434324</td>
+            <td>有效订单</td>
+            <td>4324134</td>
+            <td>¥35332324</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>  
+</template>
+<!--数据下载弹窗：end-->

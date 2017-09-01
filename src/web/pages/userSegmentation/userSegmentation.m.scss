@@ -1,0 +1,193 @@
+﻿@import "../../css/common.scss";
+.userSegmentation {
+  padding-top: 80px;
+   :global {
+    @include antTab;
+    .ant-tabs-tabpane {
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-bottom: 20px;
+    }
+    .basePanel {
+      margin-top: 20px;
+    }
+  }
+}
+
+.pageCnt {
+  margin: 20px;
+  background: #fff;
+}
+
+.pageTitle {
+  font-size: 18px;
+  font-weight: normal;
+  position: relative;
+  line-height: 100%;
+  padding: 0 0 20px 10px;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 16px;
+    width: 3px;
+    background: #e13a25;
+  }
+}
+
+.userContribution {
+  padding: 20px 0;
+}
+
+.userIndex {
+  >div {
+    height: 170px;
+    border-radius: 5px;
+    background-image: url(../../images/userIndex.png);
+    background-repeat: no-repeat;
+    position: relative;
+  }
+  &:nth-of-type(1) {
+    >div {
+      background-color: #51b8c1;
+      background-position: -50px 50px;
+    }
+  }
+  &:nth-of-type(2) {
+    >div {
+      background-color: #fca11e;
+      background-position: -60px -150px;
+    }
+  }
+  &:nth-of-type(3) {
+    >div {
+      background-color: #2c6a89;
+      background-position: -80px -350px;
+    }
+  }
+  &:nth-of-type(4) {
+    >div {
+      background-color: #97c168;
+      background-position: -45px -560px;
+    }
+  }
+}
+
+.indexTitle {
+  position: relative;
+  text-align: right;
+  height: 30px;
+  line-height: 30px;
+  font-size: 1.1rem;
+  color: #fff;
+  top: 22px;
+  margin-right: 20px;
+}
+
+.indexValue {
+  color: #fff;
+  position: relative;
+  text-align: right;
+  height: 30px;
+  line-height: 30px;
+  top: 78px;
+  margin-right: 24px;
+  font-size: 1.7rem;
+}
+
+.indexValueItem {
+  display: inline-block;
+  margin-left: 30px;
+   :global {
+    .anticon {
+      margin-right: 8px;
+      color: #4f8114;
+    }
+  }
+}
+
+.panelTitle {
+  height: 50px;
+  line-height: 50px;
+  padding-left: 30px;
+  font-weight: bold;
+  b {
+    color: #C91523;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+.panelTitleBtn {
+  float: right;
+   :global {
+    .anticon {
+      font-size: 1.3rem;
+      color: #5f687c;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+.propsDetail {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.modalTitle {
+  font-size: 1rem;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 45px;
+  background-image: url(../../images/icon-user.png);
+  background-repeat: no-repeat;
+  background-position: 5px center;
+}
+
+.chartTitle {
+  font-size: 0.9rem;
+  float: right;
+  margin-right: 10px;
+}
+
+.tableDetailWrap {
+  overflow-x: auto;
+}
+
+.tableDetail {
+  width: 100%;
+  margin-bottom: 20px;
+  tr td {
+    border: 2px solid #fff;
+    line-height: 44px;
+    text-align: center;
+    background-color: #f5f6f7;
+  }
+  thead tr td {
+    background-color: #656684;
+    color: #fff;
+  }
+}
+
+.competitorAnalysis {
+  margin-bottom: 50px;
+}
+
+.caTitleBtn {
+  height: 40px;
+  line-height: 40px;
+
+  :global {
+    .ant-radio-group {
+      float: right;
+    }
+  }
+}
+
+.caTitle {
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}

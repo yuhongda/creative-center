@@ -1,0 +1,351 @@
+﻿:global {
+  @mixin ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .businessDashboard {
+    .ant-btn .anticon {
+      font-size: .875rem;
+    }
+    padding-top: 80px;
+    .bd-page-tit {
+      height: 97px;
+      background: #fff;
+      padding: 0 60px;
+      .logos {
+        padding: 30px 0 0;
+        font-size: 16px;
+        img {
+          margin-right: 10px;
+        }
+        .and {
+          margin: 0 20px;
+          font-size: 20px;
+        }
+      }
+      .fr {
+        padding: 30px 0 0;
+        button {
+          margin-left: 20px;
+        }
+      }
+    }
+    .bg-page-cnt {
+      margin: 20px;
+      padding: 20px 20px 100px;
+      background: #fff;
+      .dashboard {
+        border: 1px solid #ebebeb;
+        &>.fj-row {
+          &>.fj-col4 {
+            padding: 16px;
+            border-right: 1px solid #ebebeb;
+            .tit {
+              line-height: 100%;
+              padding: 20px 0;
+            }
+            .progress {
+              height: 90px;
+              background: #f8f7f6;
+            }
+            .table {
+              margin-top: 20px;
+              border: 1px solid #cacbd7;
+              border-radius: 5px;
+              padding: 0 0 20px;
+              background: #fff;
+              box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+              .fj-col6 {
+                padding-top: 20px;
+                .field {
+                  font-size: 0.875rem;
+                  color: #ccc;
+                  padding-left: 15%;
+                  margin: 0 auto;
+                  @include ellipsis;
+                  font-weight: 200;
+
+                  @media screen and (max-width: 1400px) {
+                    font-size: 0.75rem;
+                  }
+                }
+                .value {
+                  font-size: 1.625rem;
+                  padding-left: 15%;
+                  margin: 0 auto;
+                  @include ellipsis;
+
+                  @media screen and (max-width: 1400px) {
+                    font-size: 1.5rem;
+                  }
+                }
+              }
+              .fj-col6.red {
+                color: #e24a35;
+                .field {
+                  color: #e24a35;
+                }
+              }
+            }
+            &:last-of-type {
+              border: 0;
+            }
+          }
+        }
+      }
+      .calendar {
+        margin-top: 70px;
+        .tit {
+          padding-left: 20px;
+        }
+        .calendar-cnt {
+          margin-top: 20px;
+          .table {
+            border: 1px solid #e2e3ea;
+            height: 360px;
+            padding: 30px;
+            .date {
+              font-size: 1rem;
+              font-weight: bold;
+            }
+            .field {
+              color: #ccc;
+              font-size: 1rem;
+              margin-top: 40px;
+              @include ellipsis;
+              margin: 20px auto 0;
+              padding-left: 15%;
+            }
+            .value {
+              font-size: 3rem;
+              font-weight: 200;
+              @include ellipsis;
+              margin: 0 auto;
+              padding-left: 15%;
+              &.red {
+                color: #e35e5e;
+              }
+
+              @media screen and (max-width: 1600px) {
+                font-size: 2rem;
+              }
+            }
+            .fj-col6 {
+              padding-bottom: 30px;
+              /*&:after{content:'';width:133px;height:86px;position:absolute;bottom:0;left:-10px;background: url(../../images/icon-graph.png) no-repeat;}*/
+              &:last-of-type>.field {
+                color: #e24a35;
+              }
+            }
+          }
+        }
+      }
+      .category {
+        margin-top: 30px;
+        .tit>.fr {
+          button {
+            margin-left: 20px;
+            &.selected {
+              border-color: #108EE9;
+              color: #108EE9;
+            }
+          }
+        }
+        .fj-col5 {
+          padding: 0 20px;
+        }
+        .progress-tit {
+          padding: 5px 0;
+        }
+        .progress-subtit {
+          font-size: 12px;
+          color: #666;
+          padding-left: 5px;
+          margin-bottom: 10px;
+        }
+        .progress-item {
+          margin-top: 30px;
+        }
+        .progress {
+          height: 90px;
+          background: #f8f7f6;
+        }
+      }
+    }
+  }
+  .dlgTargetSettings {
+    .tit {
+      font-size: 14px;
+      &>span {
+        margin-right: 20px;
+      }
+    }
+    .ant-fullcalendar-header {
+      .ant-radio-group {
+        display: none;
+      }
+    }
+    .ant-fullcalendar-date {
+      height: auto;
+      .ant-fullcalendar-content {
+        height: auto;
+      }
+      .ant-input {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+    }
+    .ant-fullcalendar-month {
+      height: auto;
+      .ant-fullcalendar-content {
+        height: auto;
+      }
+    }
+    .table-wrap {
+      .table-tit {
+        font-size: 14px;
+        padding-bottom: 10px;
+        span {
+          margin-right: 20px;
+        }
+      }
+      .table-tit-2 {
+        margin-top: 30px;
+      }
+      table {
+        table-layout: fixed;
+        width: 100%;
+        border: 1px solid #e6e6e6;
+        th {
+          text-align: center;
+          background: #f1f1f1;
+          line-height: 45px;
+        }
+        td {
+          text-align: center;
+          line-height: 100%;
+          font-size: 14px;
+          padding: 15px 0;
+          border-bottom: 1px solid #e6e6e6;
+        }
+      }
+      .fj-row {
+        border: 1px solid #e6e6e6;
+        border-bottom: 0;
+        &:last-of-type {
+          border-bottom: 1px solid #e6e6e6;
+        }
+        div {
+          text-align: center;
+          padding: 5px 0;
+        }
+        .value {
+          color: #e24a35;
+        }
+      }
+    }
+  }
+  .dlg-download {
+    .tit {
+      font-size: 14px;
+      margin-top: 30px;
+    }
+    .conditions {
+      .fj-row {
+        padding: 10px 0;
+      }
+      .fj-col4 {
+        .field {
+          display: inline-block;
+          width: 15%;
+        }
+      }
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 10px;
+      table {
+        width: 100%;
+        border: 1px solid #e6e6e6;
+        th {
+          white-space: nowrap;
+          padding: 10px;
+          font-weight: normal;
+          background: #f1f1f1;
+          color: #666;
+          &:first-of-type {
+            text-align: left;
+          }
+          &:last-of-type {
+            text-align: right;
+          }
+        }
+        td {
+          white-space: nowrap;
+          padding: 10px;
+          border-bottom: 1px solid #e6e6e6;
+          &:first-of-type {
+            text-align: left;
+          }
+          &:last-of-type {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+  .dlgTargetSettings {
+    .ant-modal-title {
+      height: 28px;
+      line-height: 28px;
+      .fr {
+        margin-right: 50px;
+      }
+    }
+
+    .ant-fullcalendar-date {
+      height: 75px;
+    }
+  }
+}
+
+.modalBtn {
+  margin-right: 10px;
+   :global {
+    .anticon {
+      font-size: .875rem;
+    }
+  }
+}
+
+.seasonTarget {
+  margin-top: 20px;
+}
+
+.uploadBtn {
+  height: 26px;
+  line-height: 26px;
+}
+
+.subTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333333;
+}
+
+.brandPanel {
+  padding-left: 20px;
+}
+
+.progressPanel {
+  padding-left: 20px;
+  padding-right: 50px;
+   :global {
+    .ant-pagination {
+      margin-top: 20px;
+      float: right;
+    }
+  }
+}

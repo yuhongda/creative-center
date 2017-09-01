@@ -1,0 +1,98 @@
+<template name="siteConditions">
+  <div class="site-conditions">
+    <fj-Row class="condition-wrap clearfix">
+      <#if {showDept}>
+        <fj-Col l="4">
+          <span class="field">部门</span>
+          <ant-Select style="width:80%" onChange={onDeptChange} value={conditionsStock.selectedDept} placeholder="请选择">
+            <#each {conditionsStock.deptData}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showCategory}>
+        <fj-Col l="4">
+          <span class="field">品类</span>
+          <ant-Cascader options={toJS(conditionsStock.categoryData)} value="{toJS(conditionsStock.selectedCategory)}" onChange={onCategoryChange} style="width:80%" placeholder="全部" changeOnSelect />
+        </fj-Col>
+      </#if>
+
+      <#if {showBrand}>
+        <fj-Col l="4">
+          <span class="field">品牌</span>
+          <ant-Select style="width:80%" onChange={onBrandChange} value="{conditionsStock.selectedBrand +('')}" placeholder="请选择">
+            <#each {conditionsStock.brandData}>
+              <ant-Option value="{value +('')}" key={@index}>{label}</ant-Option>
+            </#each>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showDataRange}>
+        <fj-Col l="4">
+          <span class="field" style="width:20%">数据范围</span>
+          <ant-Select style="width:70%" onChange={onDataRangeChange} defaultValue="0" value="{conditionsStock.selectedDataRange +('')}" placeholder="请选择">
+            <ant-Option value="0" key={0}>全部</ant-Option>
+            <ant-Option value="1" key={1}>爆品</ant-Option>
+          </ant-Select>
+        </fj-Col>
+      </#if>
+
+      <#if {showSKU}>
+        <fj-Col l="4">
+          <span class="field">SKU</span>
+          <ant-Input placeholder="请输入" style="width:80%" value={conditionsStock.skuList} onChange={onSKUChange} />
+        </fj-Col>
+      </#if>
+
+      <#if {showDate}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <#if {currentDateType ==('month')}>
+          <ant-MonthPicker defaultValue="{lastMonth}" onChange={onDateChange} disabledDate={disabledMonth} style="width:80%" placeholder="请选择所在月" />
+        </#if>
+        <#if {currentDateType !=('month')}>
+          <ant-DatePicker onChange={onDateChange} value={selectedDate} disabledDate={disabledDate} ref="datepicker" style="width:80%" placeholder="{currentDateType ==('week') ?('请选择所在周','请选择日期')}" />
+        </#if>
+      </fj-Col>
+      </#if>
+
+      <#if {showMonthDate}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <ant-MonthPicker defaultValue="{lastMonth}" onChange={onMonthDateChange} style="width:80%" placeholder="请选择所在月" />
+      </fj-Col>
+      </#if>
+
+      <#if {showDateDays}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <ant-DatePicker onChange={onDateDaysChange} ref="datepicker" style="width:80%" placeholder="请选择日期" />
+      </fj-Col>
+      </#if>
+
+      <#if {showDateType}>
+      <fj-Col l="4">
+        <ant-RadioGroup defaultValue="day" size="normal" onChange={onDateTypeChange}>
+          <ant-RadioButton value="day">按日</ant-RadioButton>
+          <ant-RadioButton value="week">按周</ant-RadioButton>
+          <ant-RadioButton value="month">按月</ant-RadioButton>
+        </ant-RadioGroup>
+      </fj-Col>
+      </#if>
+
+      <#if {showDateRange}>
+      <fj-Col l="4">
+        <span class="field">时间</span>
+        <ant-RangePicker onChange={onDateRangeChange} style="width:80%" />
+      </fj-Col>
+      </#if>
+      <fj-Clearfix />
+      <fj-Col l="12" class="tr btn-search-area" style="margin-top:20px;padding-right:2.5%">
+        <ant-Button {onClick}>{conditionBtnContent}</ant-Button>
+      </fj-Col>
+    </fj-Row>
+  </div>
+</template>

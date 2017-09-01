@@ -1,0 +1,173 @@
+<template name="userSegmentation">
+  <div class="{styles.userSegmentation}">
+    <!--查询条件-->
+    <conditions {onSearch} showCategory showBrand showDate {showMultiBrand} defaultValueType=2 />
+    <div class="{styles.pageCnt}">
+      <ant-Tabs defaultActiveKey="userData" onChange={onTabChange}>
+        <@tabBarExtraContent>
+          <ant-Tooltip placement="bottomRight" trigger="click">
+            <@title>
+              <div class="propTooltip">
+                <div class="propTitle">选择需要的属性</div>
+                <ant-CheckboxGroup class="propBody" value="{userSegmentation.propsChecked | toJS}" onChange={onCheckboxChange}>
+                  <#each {userSegmentation.userProps}>
+                    <div key={@index} class="propItem">
+                      <ant-Checkbox {value} {checked}>{label}</ant-Checkbox>
+                    </div>
+                  </#each>
+                </ant-CheckboxGroup>
+              </div>
+            </@title>
+            <ant-Icon class="propMenu" type="setting" />
+          </ant-Tooltip>
+        </@tabBarExtraContent>
+        <ant-TabPane tab="用户数据" key="userData">
+          <UserContribution />
+          <fj-row gutter={20} clearfix>
+            <#each {userSegmentation.propsData}>
+              <fj-col l=6 key={@index}>
+                <PropsChart propData={this} />
+              </fj-col>
+            </#each>
+          </fj-row>
+          <ant-Modal
+            title="{userSegmentation.modalPropName}"
+            width={1050}
+            visible={userSegmentation.modalVisible}
+            footer={null}
+            onCancel={onModalCancel}>
+            <PropsDetail key="propsDetail_{userSegmentation.modalPropName}" />
+          </ant-Modal>
+        </ant-TabPane>
+        <ant-TabPane tab="竞品分析" key="competitorAnalysis">
+          <div class="{styles.caTitleBtn}">
+            <ant-RadioGroup onChange={radioChange} value={userSegmentation.dataType}>
+              <ant-RadioButton value="1">用户数据</ant-RadioButton>
+              <ant-RadioButton value="2">销售贡献</ant-RadioButton>
+            </ant-RadioGroup>
+          </div>
+          <#each {userSegmentation.userStructureData}>
+            <CompetitorAnalysis key={@index} propData={this} />
+          </#each>
+        </ant-TabPane>
+      </ant-Tabs>
+    </div>
+  </div>
+</template>
+
+<template name="userContribution">
+  <div class="{styles.userContribution}">
+    <h2 class="{styles.pageTitle}">用户贡献</h2>
+    <fj-row gutter={20} clearfix>
+      <fj-col l=2 class="{styles.userIndex}">
+        <div>
+          <div class="{styles.indexTitle}">当月用户数</div>
+          <div class="{styles.indexValue}">{userSegmentation.usersNumber | thousands}</div>
+        </div>
+      </fj-col>
+      <fj-col l=2 class="{styles.userIndex}">
+        <div>
+          <div class="{styles.indexTitle}">客单数</div>
+          <div class="{styles.indexValue}">{userSegmentation.singularNumber | thousands}</div>
+        </div>
+      </fj-col>
+      <fj-col l=2 class="{styles.userIndex}">
+        <div>
+          <div class="{styles.indexTitle}" style="font-size:16px;">销售贡献(万元)</div>
+          <div class="{styles.indexValue}">{userSegmentation.salesContribution | parseMillion}</div>
+        </div>
+      </fj-col>
+      <fj-col l=6 class="{styles.userIndex}">
+        <div>
+          <div class="{styles.indexTitle}">用户标签</div>
+          <div class="{styles.indexValue}" style="height: 120px;margin-top:-55px; overflow-y: auto;font-size:20px;">
+            <#each {userSegmentation.propsData}>
+              <div key={@index} class="{styles.indexValueItem}"><ant-Icon type="tag-o" />{maxLabel}</div>
+            </#each>
+          </div>
+        </div>
+      </fj-col>
+    </fj-row>
+  </div>
+</template>
+
+<template name="propsChart">
+  <div class="basePanel">
+    <div class="basePanelTitle">{propName}</div>
+    <div class="{styles.panelTitle}">
+      {isCategorySale ?('品类销售', '用户')}
+      <b>VS</b>
+      {isCategoryUser ?('品类用户', '销售')}
+      <div class="{styles.panelTitleBtn}">
+        <ant-Icon type="appstore{isOpenCategory ?('', '-o')}" onClick={openCategory} />
+        <ant-Icon type="search" onClick={openDetail} />
+      </div>
+    </div>
+    <div>
+      <ec-BarChart ref="chart" {option} {data} height={450} />
+    </div>
+  </div>
+</template>
+
+<template name="propsDetail">
+  <div class="{styles.propsDetail}">
+    <div class="{styles.modalTitle}">
+      用户数变化趋势
+      <div class="{styles.chartTitle}">用户同比增长率</div>
+    </div>
+    <ec-BarChart ref="chart" option={userOption} data={userData} height={400} />
+    <div class="{styles.modalTitle}">
+      销量变化趋势
+      <div class="{styles.chartTitle}">销量同比增长率</div>
+    </div>
+    <ec-BarChart ref="chart" option={saleOption} data={saleData} height={400} />
+    <div class="{styles.modalTitle}">
+      客单价及复购率
+    </div>
+    <div class="{styles.tableDetailWrap}">
+      <table class="{styles.tableDetail}">
+        <thead>
+          <tr>
+            <td></td>
+            <#each {userSegmentation.propsDetailData}>
+              <td key={@index}>{name}</td>
+            </#each>
+          </tr>
+        </thead>
+        <tbody>
+          <#each {tableData}>
+            <#if {@index == 1 || (@index == 3)}>
+              <tr key={@index}>
+                <td style="min-width:100px;">{this[0]}</td>
+                <#each {userSegmentation.propsDetailData}>
+                  <#with {../this.(@index + 1)} as="data">
+                    <td key={@index}>{data != null ? (data.toFixed(2), '')}</td>
+                  </#with>
+                </#each>
+              </tr>
+              <#else>
+                <tr key={@index}>
+                  <td style="min-width:100px;">{this[0]}</td>
+                  <#each {userSegmentation.propsDetailData}>
+                    <td key={@index}>{../this.(@index + 1).('toFixed')(2)}</td>
+                  </#each>
+                </tr>
+              </#else>
+            </#if>
+          </#each>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<template name="competitorAnalysis">
+  <div class="{styles.competitorAnalysis}">
+    <div class="{styles.caTitle}">
+      {propName}-{userSegmentation.dataType == '1' ? ('用户数据', '销售贡献')}
+    </div>
+    <div>
+      <ec-BarChart ref="chart" {option} {data} height={400} />
+    </div>
+  </div>
+</template>

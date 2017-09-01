@@ -1,0 +1,12 @@
+<#if {info.disabled}>
+    <div class="{styles.funcIcon} {styles.funcIconDisabled}" onClick={onClick}>
+        <div class={styles.ico}><img src={info.icon}></div>
+        <div class={styles.ttl}>{info.title}</div>
+    </div>
+    <#else>
+        <div class={styles.funcIcon} onClick={onClick}>
+            <div class={styles.ico}><img src={info.icon}></div>
+            <div class={styles.ttl}>{info.title}</div>
+        </div>
+    </#else>
+</#if>

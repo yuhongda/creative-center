@@ -1,0 +1,22 @@
+﻿.site-conditions{
+  .condition-wrap{
+    border-bottom:1px solid #eee;padding:10px;padding-bottom:20px;background:#fff;
+    .field {display: inline-block;width:12%;height: 48px;}
+    .fj-col4{padding:10px 0;height: 48px;overflow: hidden;}
+  }
+  .btn-search-area {
+    :global {
+       .ant-btn {
+          background:#414473;
+          border-radius: 30px;
+          padding: 4px 25px;
+          font-size: 14px;
+          color:#fff;
+          height: auto;
+       }
+       .ant-btn:hover {
+          border-color: #ffb09e;
+       }
+    }
+  }
+}

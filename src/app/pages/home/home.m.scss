@@ -1,0 +1,19 @@
+@import "../../css/config";
+
+.homeWrap {
+  position: absolute;
+  width: 100%;
+  z-index: $headerZIndex + 1;
+  margin-top: -$headerHeight;
+}
+
+.logos {
+  padding: .1rem;
+  line-height: .38rem;
+  vertical-align: middle;
+  background: #fff;
+
+  & > img {
+    vertical-align: middle;
+  }
+}

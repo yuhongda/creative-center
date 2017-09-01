@@ -1,0 +1,91 @@
+<template name="ConditionsStock">
+    <antm-Card full>
+        <antm-CardBody>
+            <antm-List>
+
+                <#if {showDept}>
+                    <antm-Picker
+                            extra="全部"
+                            data={toJS(conditionsStock.deptData)}
+                            value="{toJS(selectedDept)}"
+                            title="选择部门"
+                            onChange={onDeptChange}
+                    >
+                        <antm-ListItem
+                                arrow="horizontal"
+                        >部门</antm-ListItem>
+                    </antm-Picker>
+                </#if>
+
+                <#if {showCategory}>
+                    <antm-Picker
+                            extra="全部"
+                            data={toJS(conditionsStock.categoryData)}
+                            value="{toJS(conditionsStock.selectedCategory)}"
+                            title="选择品类"
+                            onChange={onCategoryChange}
+                    >
+                        <antm-ListItem
+                                arrow="horizontal"
+                        >品类</antm-ListItem>
+                    </antm-Picker>
+                </#if>
+
+                <#if {showBrand}>
+                    <antm-Picker
+                            extra="全部"
+                            cols={1}
+                            data={brandData}
+                            value={selectedBrand}
+                            title="选择品牌"
+                            onChange={onBrandChange}
+                    >
+                        <antm-ListItem
+                                arrow="horizontal"
+                        >品牌</antm-ListItem>
+                    </antm-Picker>
+                </#if>
+
+                <#if {showMonthDate}>
+                    <antm-DatePicker
+                            extra="全部"
+                            title="选择日期"
+                            mode="month"
+                            format={monthFormatter}
+                            value={selectedDateValue}
+                            onChange={onMonthDateChange}
+                    >
+                        <antm-ListItem
+                                arrow="horizontal"
+                        >时间</antm-ListItem>
+                    </antm-DatePicker>
+                </#if>
+
+                <#if {showDate}>
+                    <antm-DatePicker
+                            extra="全部"
+                            title="选择日期"
+                            mode="date"
+                            value={selectedDateValue}
+                            onChange={onDateChange}
+                    >
+                        <antm-ListItem
+                                arrow="horizontal"
+                        >日期</antm-ListItem>
+                    </antm-DatePicker>
+                </#if>
+
+                <#if {showSKU}>
+                    <antm-ListItem>
+                        <@extra>
+                        <antm-InputItem placeholder="请输入" onChange={onSKUChange} class={styles.csInput}></antm-InputItem>
+                        </@extra>
+                        SKU
+                    </antm-ListItem>
+                </#if>
+            </antm-List>
+            <antm-WhiteSpace />
+            <antm-Button type="primary" {onClick}>{conditionBtnContent}</antm-Button>
+        </antm-CardBody>
+    </antm-Card>
+</template>

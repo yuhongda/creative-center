@@ -1,0 +1,167 @@
+<template name="stockMarketing">
+    <antm-WingBlank size="sm">
+        <antm-WhiteSpace size="sm" />
+        <conditionsStock {onSearch} showDept showCategory showBrand showDate />
+        <antm-WhiteSpace size="sm" />
+        <stockMarketingSummary />
+        <antm-WhiteSpace size="sm" />
+        <stockMarketingMap />
+    </antm-WingBlank>
+</template>
+
+
+<template name="stockMarketingSummary">
+    <antm-Card>
+        <antm-CardHeader title="库存健康监控"></antm-CardHeader>
+        <antm-CardBody>
+            <antm-Flex>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">库存金额（万元）</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.stockMoney}</div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.stockMoneyGrowth >(0) ?(styles.red,styles.green)}">
+                                <div>{stockMarketing.summaryData.stockMoneyGrowth >(0) ?('+','')}{stockMarketing.summaryData.stockMoneyGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">PV现货率</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.pvRates} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.pvRatesGrowth >(0) ?(styles.red,styles.green)}">
+                                <div>{stockMarketing.summaryData.pvRatesGrowth >(0) ?('+','')}{stockMarketing.summaryData.pvRatesGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+            </antm-Flex>
+            <antm-WhiteSpace size="sm" />
+            <antm-Flex>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">实物现货率(中小件)</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.inStockRates} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.inStockRatesGrowth >(0) ?(styles.red,styles.green)}">
+                            <div>{stockMarketing.summaryData.inStockRatesGrowth >(0) ?('+','')}{stockMarketing.summaryData.inStockRatesGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">实物现货率(大件)</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.inStockRatesBig} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.inStockRatesGrowthBig >(0) ?(styles.red,styles.green)}">
+                                <div>{stockMarketing.summaryData.inStockRatesGrowthBig >(0) ?('+','')}{stockMarketing.summaryData.inStockRatesGrowthBig}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+            </antm-Flex>
+            <antm-WhiteSpace size="sm" />
+            <antm-Flex>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">周转天数</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.transferDays} <span>天</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.transferDaysGrowth >(0) ?(styles.red,styles.green)}">
+                            <div>{stockMarketing.summaryData.transferDaysGrowth >(0) ?('+','')}{stockMarketing.summaryData.transferDaysGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">畅销品现货率(中小件)</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.bigSales} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.bigSalesGrowth >(0) ?(styles.red,styles.green)}">
+                            <div>{stockMarketing.summaryData.bigSalesGrowth >(0) ?('+','')}{stockMarketing.summaryData.bigSalesGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+            </antm-Flex>
+            <antm-WhiteSpace size="sm" />
+            <antm-Flex>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">畅销品现货率(大件)</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.bigSalesBig} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.bigSalesGrowthBig >(0) ?(styles.red,styles.green)}">
+                            <div>{stockMarketing.summaryData.bigSalesGrowthBig >(0) ?('+','')}{stockMarketing.summaryData.bigSalesGrowthBig}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+                <antm-FlexItem>
+                    <div class="{styles.summaryItem}">
+                        <div class="{styles.field}">滞销占比</div>
+                        <div class="{styles.num}">{stockMarketing.summaryData.unsales} <span>%</span></div>
+                        <div class="{styles.rates}">
+                            <div class="{stockMarketing.summaryData.unsalesGrowth >(0) ?(styles.red,styles.green)}">
+                            <div>{stockMarketing.summaryData.unsalesGrowth >(0) ?('+','')}{stockMarketing.summaryData.unsalesGrowth}%</div>
+                            </div>
+                        </div>
+                    </div>
+                </antm-FlexItem>
+            </antm-Flex>
+        </antm-CardBody>
+    </antm-Card>
+</template>
+
+<template name="stockMarketingMap">
+    <div class="styles.stockMarketingMap">
+        <antm-List>
+            <antm-Picker
+                    data={tabItems}
+                    title="选择指标"
+                    value={currentTab}
+                    cols={1}
+                    onChange={onTabChanged}
+            >
+                <antm-ListItem arrow="horizontal">指标</antm-ListItem>
+            </antm-Picker>
+        </antm-List>
+        <antm-WhiteSpace size="sm" />
+        <antm-Card>
+            <antm-CardHeader title="区域详情">
+                <@extra>
+                <div>
+                    <span class="{styles.field}">{stockMarketing.filterSmallObject ?('中小件','大件')}</span><antm-Switch onChange={filterSmallObject} checked={stockMarketing.filterSmallObject} />
+                </div>
+                </@extra>                
+            </antm-CardHeader>
+            <antm-CardBody>
+                <ec-MapChart ref="ecMap" option={mapOption} />
+            </antm-CardBody>
+        </antm-Card>
+        <antm-WhiteSpace size="sm" />
+        <antm-Card>
+            <antm-CardHeader title="一级品类详情"></antm-CardHeader>
+            <antm-CardBody>
+                <ec-BarChart ref="ecLevelOne" option={barLevelOneOption} data={barLevelOneData} />                
+            </antm-CardBody>
+        </antm-Card>
+        <antm-WhiteSpace size="sm" />
+        <antm-Card>
+            <antm-CardHeader title="Band详情"></antm-CardHeader>
+            <antm-CardBody>
+                <#if {currentTab ==('stockMoney')}>
+                <ec-BarChart ref="ecBandStockMoney" option={barStockMoneyBandOption} data={barStockMoneyBandData} height={300} />
+                </#if>
+                <#if {currentTab !=('stockMoney')}>
+                <ec-BarChart ref="ecBand" option={barBandOption} data={barBandData} height={300} />
+                </#if>
+            </antm-CardBody>
+        </antm-Card>
+        <antm-WhiteSpace size="sm" />
+    </div>
+</template>

@@ -1,0 +1,16 @@
+<template name="ccProgress">
+  <div class="ccProgress">
+    <div class="ccProgressInner">
+      <div class="targetProgress" style="left: {targetPos}%">
+        <span>
+          <span class=text>目标：</span>{target | parseMillion}
+        </span>
+      </div>
+      <div class="currentProgress" style="width: {currentPos}%">
+        <span>
+          <span class=text>已完成：</span>{current | parseMillion}
+        </span>
+      </div>
+    </div>
+  </div>
+</template>

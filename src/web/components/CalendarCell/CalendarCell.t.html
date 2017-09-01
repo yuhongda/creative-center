@@ -1,0 +1,8 @@
+<template name="CalendarCell">
+  <div class="{styles.calendarCell}" onClick={onCellClick}>
+    <#if {editing &&(!(isDisabled))}>
+      <ant-Input value={inputValue} {onChange} {onBlur} ref="input" />
+      <#else>{model.(name).(date) ?(model.(name).(date),'')}</#else>
+    </#if>
+  </div>
+</template>

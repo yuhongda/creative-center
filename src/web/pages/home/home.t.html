@@ -1,0 +1,199 @@
+<template name="home">
+  <div class="home">
+    <div class="homeHeader {anim}">
+      <div class="wrapper">
+        <a class="btn-login" onClick={login}>登 录</a>
+        <a class="logo"></a>
+      </div>
+    </div>
+    <div class="homeBanner">
+      <div class="inner">
+      <div data-pb="true" class="parallax-banner">
+          <div class="layer-1"></div>
+          <div class="layer-2"></div>
+          <div class="layer-3 {zoomIn}"></div>
+      </div>
+    </div>
+      <!-- <a class="btn-login" onClick={login}>登 录</a> -->
+    </div>
+    <!-- intro:start -->
+    <div class="intro">
+      <div class="wrapper">
+        <h2><span>产品介绍</span></h2>
+        <ul class="featureList clearfix">
+          <li class="item-1 {current == (1) ?('cur','')}" onClick={onItemClicked(1)}>
+            <p>消费升级</p>
+          </li>
+          <li class="item-2 {current == (2) ?('cur','')}" onClick={onItemClicked(2)}>
+            <p>用户洞察</p>
+          </li>
+          <li class="item-3 {current == (3) ?('cur','')}" onClick={onItemClicked(3)}>
+            <p>新品上市</p>
+          </li>
+          <li class="item-4 {current == (4) ?('cur','')}" onClick={onItemClicked(4)}>
+            <p>仓储模拟</p>
+          </li>
+          <li class="item-5 {current == (5) ?('cur','')}" onClick={onItemClicked(5)}>
+            <p>补货预测</p>
+          </li>
+        </ul>
+      </div>
+      <div class="intro-cnt">
+        <div class="wrapper">
+          <span class="arrow pos-{current}"></span>
+          <ul>
+            <li class="cnt-1 clearfix {current == (1) ?('cur','')}">
+              <div class="left">
+                <div class="tit">合理选品扩大用户群体，促进消费升级</div>
+                <div class="sub-tit">站内拉新全方位决策支持</div>
+                <!-- <div class="text-tit">XXX增长力模型</div>
+                <div class="text-cnt">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.Proin gravida dolor sit amet lacus accumsan et</p>
+                  <p>viverra just commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </div> -->
+              </div>
+              <div class="right">
+                <img src="{img1}" alt="">
+              </div>
+            </li>
+            <li class="cnt-2 clearfix {current == (2) ?('cur','')}">
+              <div class="left">
+                <div class="tit">精准用户画像助力人群定位</div>
+                <div class="sub-tit">解析用户购物路径偏好，优化购物路径，提升转化率</div>
+                <!-- <div class="text-tit">XXX增长力模型</div>
+                <div class="text-cnt">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.Proin gravida dolor sit amet lacus accumsan et</p>
+                  <p>viverra just commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </div> -->
+              </div>
+              <div class="right">
+                <img src="{img2}" alt="">
+              </div>
+            </li>
+            <li class="cnt-3 clearfix {current == (3) ?('cur','')}">
+              <div class="left">
+                <div class="tit">商品基因与用户需求结合，探寻新品市场</div>
+                <!-- <div class="sub-tit">依托于品类管理消费升级</div>
+                <div class="text-tit">XXX增长力模型</div>
+                <div class="text-cnt">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.Proin gravida dolor sit amet lacus accumsan et</p>
+                  <p>viverra just commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </div> -->
+              </div>
+              <div class="right">
+                <img src="{img3}" alt="">
+              </div>
+            </li>
+            <li class="cnt-4 clearfix {current == (4) ?('cur','')}">
+              <div class="left">
+                <div class="tit">模拟与追踪结合，打造最为敏捷、快速反应的供应链</div>
+                <!-- <div class="sub-tit">依托于品类管理消费升级</div>
+                <div class="text-tit">XXX增长力模型</div>
+                <div class="text-cnt">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.Proin gravida dolor sit amet lacus accumsan et</p>
+                  <p>viverra just commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </div> -->
+              </div>
+              <div class="right">
+                <img src="{img4}" alt="">
+              </div>
+            </li>
+            <li class="cnt-5 clearfix {current == (5) ?('cur','')}">
+              <div class="left">
+                <div class="tit">联合预测提升供应链效率</div>
+                <!-- <div class="sub-tit">依托于品类管理消费升级</div>
+                <div class="text-tit">XXX增长力模型</div>
+                <div class="text-cnt">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.Proin gravida dolor sit amet lacus accumsan et</p>
+                  <p>viverra just commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </div> -->
+              </div>
+              <div class="right">
+                <img src="{img5}" alt="">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- intro:end -->
+
+
+    <div class="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title">我们的技术能力</h2>
+                    <p class="sub-title">AI人工智能技术和零售品类管理经验相结合，智慧零售能力与成果开放共享，带动整个零售行业的智能化发展与变革</p>
+                </div>
+            </div>
+
+            <div class="row row-content text-center">
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-cubes"></i>
+                        <h3>全行业</h3>
+                        <p>不同行业不同解决方案</p>
+                    </div>
+                </div>
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-desktop"></i>
+                        <h3>大数据</h3>
+                        <p>海量行业数据积累</p>
+                    </div>
+                </div>
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-group"></i>
+                        <h3>人工智能</h3>
+                        <p>领先的人工智能技术</p>
+                    </div>
+                </div>
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-link"></i>
+                        <h3>供应链闭环</h3>
+                        <p>智慧供应链闭环管理</p>
+                    </div>
+                </div>
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-skyatlas"></i>
+                        <h3>云计算</h3>
+                        <p>全产业链的生态格局</p>
+                    </div>
+                </div>
+                <div class="col-4-md col-ser-item">
+                    <div class="service-box">
+                        <i class="icon fa fa-handshake-o"></i>
+                        <h3>智慧协同</h3>
+                        <p>京东品牌商协同发展</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-info-box">
+       <div class="info-inner"></div>
+    </div>
+
+
+    <div class="home-footer">
+      <div class="wrapper">
+        <div class="column">
+          <!-- <div class="tit">联系我们</div>
+          <div class="item">咨询电话：4006151212（7*24）</div> -->
+        </div>
+        <div class="links">
+          <a target="_blank" href="//www.jd.com">京东商城</a>
+          <a target="_blank" href="//jr.jd.com">京东金融</a>
+          <a target="_blank" href="//www.jcloud.com">京东云</a>
+          <a target="_blank" href="//zhuisu.jd.com/">京东防伪追溯开放平台</a>
+        </div>
+        <div class="copyright"><span>Copyright  ©  2012-{year}</span>    <span>ril.jd.com</span>   <span>版权所有</span>  <span>京ICP备11041704号-6</span>  <span>京ICP证070359号</span></div>
+      </div>
+    </div>
+  </div>
+</template>

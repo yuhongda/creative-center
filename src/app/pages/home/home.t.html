@@ -1,0 +1,39 @@
+<template name="Home">
+    <div class="{styles.homeWrap}">
+        <div>
+            <img src={imgHomeMain} width="100%" />
+        </div>
+        <!--
+        <antm-WhiteSpace size="sm" />
+        <div class={styles.logos}><img src={logoJD} />京东 & <img src={logoPG} /> 宝洁</div>
+        <antm-WhiteSpace size="sm" />
+        <antm-Card full>
+            <antm-CardHeader title="我的收藏"/>
+            <antm-CardBody>
+                收藏
+            </antm-CardBody>
+        </antm-Card>
+        -->
+        <#each {FUNCS}>
+            <antm-WhiteSpace size="lg" />
+            <antm-Card full>
+                <antm-CardHeader title={title}/>
+                <antm-CardBody>
+                    <#each {modules}>
+                        <#if {@index !=(0)}>
+                            <antm-WhiteSpace size="xl" />
+                            <antm-WhiteSpace size="md" />
+                        </#if>
+                        <antm-Flex key={`icon_row_{@index}`}>
+                            <#each {this}>
+                                <antm-FlexItem key={key}>
+                                    <FuncIcon info={this} history={history} />
+                                </antm-FlexItem>
+                            </#each>
+                        </antm-Flex>
+                    </#each>
+                </antm-CardBody>
+            </antm-Card>
+        </#each>
+    </div>
+</template>
